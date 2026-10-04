@@ -1,0 +1,214 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  ORGANIZER
+  SPONSOR
+  PLAYER
+}
+
+enum TournamentStatus {
+  DRAFT
+  OPEN
+  ONGOING
+  FINISHED
+}
+
+enum MatchStatus {
+  PENDING
+  READY
+  DONE
+}
+
+enum ProposalStatus {
+  OPEN
+  FUNDED
+  CLOSED
+}
+
+enum DealStatus {
+  PENDING
+  ACCEPTED
+  PAID
+  DISBURSED
+  REJECTED
+}
+
+enum PaymentStatus {
+  UNPAID
+  PAID
+}
+
+enum LfgStatus {
+  OPEN
+  TEAM_FORMED
+  CLOSED
+}
+
+enum AdSlotPlacement {
+  PRE_ROLL
+  SIDE_BANNER
+  BREAK_BANNER
+}
+
+model User {
+  id          String   @id @default(cuid())
+  name        String
+  email       String   @unique
+  role        Role
+  orgName     String?
+  city        String?
+  createdAt   DateTime @default(now())
+  tournaments Tournament[]  @relation("Organizer")
+  registrations Registration[]
+  lfgPosts      LfgPost[]
+  deals         SponsorDeal[]
+  adBookings    AdBooking[]
+  tickets       HelpTicket[]
+}
+
+model Tournament {
+  id          String   @id @default(cuid())
+  organizerId String
+  organizer   User     @relation("Organizer", fields: [organizerId], references: [id])
+  title       String
+  game        String
+  description String
+  startDate   DateTime
+  maxTeams    Int
+  teamSize    Int      @default(5)
+  entryFee    Int      @default(0)
+  prizePool   Int      @default(0)
+  status      TournamentStatus @default(DRAFT)
+  streamUrl   String?
+  saasFeePaid Boolean  @default(false)
+  createdAt   DateTime @default(now())
+
+  registrations Registration[]
+  matches       Match[]
+  proposals     SponsorProposal[]
+  adSlots       AdSlot[]
+}
+
+model Registration {
+  id             String   @id @default(cuid())
+  tournamentId   String
+  tournament     Tournament @relation(fields: [tournamentId], references: [id], onDelete: Cascade)
+  userId         String
+  user           User     @relation(fields: [userId], references: [id])
+  teamName       String
+  members        String
+  isSoloPlayer   Boolean  @default(false)
+  seed           Int?
+  paymentStatus  PaymentStatus @default(UNPAID)
+  amountPaid     Int      @default(0)
+  convenienceFee Int      @default(0)
+  createdAt      DateTime @default(now())
+}
+
+model Match {
+  id          String   @id @default(cuid())
+  tournamentId String
+  tournament  Tournament @relation(fields: [tournamentId], references: [id], onDelete: Cascade)
+  round       Int
+  position    Int
+  teamAId     String?
+  teamBId     String?
+  scoreA      Int?
+  scoreB      Int?
+  winnerId    String?
+  nextMatchId String?
+  nextSlot    String?
+  status      MatchStatus @default(PENDING)
+  isBye       Boolean  @default(false)
+
+  @@index([tournamentId, round])
+}
+
+model SponsorProposal {
+  id            String   @id @default(cuid())
+  tournamentId  String
+  tournament    Tournament @relation(fields: [tournamentId], references: [id], onDelete: Cascade)
+  title         String
+  pitchText     String
+  targetAmount  Int
+  expectedReach Int
+  benefits      String
+  status        ProposalStatus @default(OPEN)
+  deals         SponsorDeal[]
+  createdAt     DateTime @default(now())
+}
+
+model SponsorDeal {
+  id             String   @id @default(cuid())
+  proposalId     String
+  proposal       SponsorProposal @relation(fields: [proposalId], references: [id], onDelete: Cascade)
+  sponsorId      String
+  sponsor        User     @relation(fields: [sponsorId], references: [id])
+  amount         Int
+  platformFee    Int
+  netToOrganizer Int
+  status         DealStatus @default(PENDING)
+  createdAt      DateTime @default(now())
+}
+
+model LfgPost {
+  id           String   @id @default(cuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id])
+  game         String
+  role         String
+  rank         String
+  playStyle    String
+  availability String
+  bio          String
+  tournamentId String?
+  status       LfgStatus @default(OPEN)
+  invites      LfgInvite[]
+  createdAt    DateTime @default(now())
+}
+
+model LfgInvite {
+  id         String @id @default(cuid())
+  postId     String
+  post       LfgPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  fromUserId String
+  message    String
+  accepted   Boolean @default(false)
+}
+
+model AdSlot {
+  id           String   @id @default(cuid())
+  tournamentId String
+  tournament   Tournament @relation(fields: [tournamentId], references: [id], onDelete: Cascade)
+  placement    AdSlotPlacement
+  price        Int
+  bookings     AdBooking[]
+}
+
+model AdBooking {
+  id          String @id @default(cuid())
+  slotId      String
+  slot        AdSlot @relation(fields: [slotId], references: [id], onDelete: Cascade)
+  sponsorId   String
+  sponsor     User   @relation(fields: [sponsorId], references: [id])
+  brandName   String
+  bannerText  String
+  bannerColor String @default("#f59e0b")
+}
+
+model HelpTicket {
+  id        String @id @default(cuid())
+  userId    String
+  user      User   @relation(fields: [userId], references: [id])
+  subject   String
+  message   String
+  status    String @default("OPEN")
+  createdAt DateTime @default(now())
+}
