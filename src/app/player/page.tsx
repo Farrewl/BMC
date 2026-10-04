@@ -2,18 +2,26 @@ import { DemoBanner } from "@/components/layout/DemoBanner";
 import { Navbar, Footer } from "@/components/layout/Navbar";
 import { BrutaCard, BrutaBadge, BrutaLink } from "@/components/ui/bruta";
 import { db } from "@/lib/db";
+import { demoTournaments, demoLfgPosts, withDemo } from "@/lib/demo";
 import { rupiah, tanggal } from "@/lib/format";
 import { gameColor, statusBadge } from "@/lib/data";
 import { calcTicket } from "@/lib/fees";
 import { registerAction } from "@/lib/actions";
 
 export default async function PlayerHome() {
-  const tournaments = await db.tournament.findMany({
-    where: { status: { in: ["OPEN", "ONGOING"] } },
-    orderBy: { startDate: "asc" },
-    include: { _count: { select: { registrations: true } } },
-  });
-  const lfgCount = await db.lfgPost.count({ where: { status: "OPEN" } });
+  const tournaments = await withDemo(
+    () =>
+      db.tournament.findMany({
+        where: { status: { in: ["OPEN", "ONGOING"] } },
+        orderBy: { startDate: "asc" },
+        include: { _count: { select: { registrations: true } } },
+      }),
+    demoTournaments.filter((t) => t.status === "OPEN" || t.status === "ONGOING")
+  );
+  const lfgCount = await withDemo(
+    () => db.lfgPost.count({ where: { status: "OPEN" } }),
+    3
+  );
 
   return (
     <div className="flex min-h-full flex-1 flex-col bg-void text-cream">

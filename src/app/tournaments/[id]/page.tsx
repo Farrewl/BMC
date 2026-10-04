@@ -6,18 +6,23 @@ import { BrutaCard, BrutaBadge, BrutaLink } from "@/components/ui/bruta";
 import { gameColor, statusBadge } from "@/lib/data";
 import { rupiah, tanggal } from "@/lib/format";
 import { db } from "@/lib/db";
+import { demoTournamentDetail, withDemo } from "@/lib/demo";
 
 export default async function Detail({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const t = await db.tournament.findUnique({
-    where: { id },
-    include: {
-      registrations: { orderBy: { seed: "asc" } },
-      matches: { orderBy: [{ round: "asc" }, { position: "asc" }] },
-      proposals: { include: { deals: true } },
-      adSlots: { include: { bookings: true } },
-    },
-  });
+  const t = await withDemo(
+    () =>
+      db.tournament.findUnique({
+        where: { id },
+        include: {
+          registrations: { orderBy: { seed: "asc" } },
+          matches: { orderBy: [{ round: "asc" }, { position: "asc" }] },
+          proposals: { include: { deals: true } },
+          adSlots: { include: { bookings: true } },
+        },
+      }),
+    demoTournamentDetail(id)
+  );
   if (!t) notFound();
 
   const funded = t.proposals.reduce(

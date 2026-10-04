@@ -3,6 +3,7 @@ import { DemoBanner } from "@/components/layout/DemoBanner";
 import { Navbar, Footer } from "@/components/layout/Navbar";
 import { BrutaCard, BrutaBadge, BrutaLink } from "@/components/ui/bruta";
 import { db } from "@/lib/db";
+import { demoProposalDetail, withDemo } from "@/lib/demo";
 import { rupiah } from "@/lib/format";
 import { calcSponsorDeal } from "@/lib/fees";
 import { fundProposalAction } from "@/lib/actions";
@@ -16,13 +17,17 @@ export default async function ProposalDetail({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const p = await db.sponsorProposal.findUnique({
-    where: { id },
-    include: {
-      tournament: true,
-      deals: { include: { sponsor: { select: { name: true } } } },
-    },
-  });
+  const p = await withDemo(
+    () =>
+      db.sponsorProposal.findUnique({
+        where: { id },
+        include: {
+          tournament: true,
+          deals: { include: { sponsor: { select: { name: true } } } },
+        },
+      }),
+    demoProposalDetail(id)
+  );
   if (!p) notFound();
 
   const paid = p.deals.filter((d) => d.status === "PAID").reduce((s, d) => s + d.amount, 0);

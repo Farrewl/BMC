@@ -5,6 +5,7 @@ import { gameColor, statusBadge } from "@/lib/data";
 import { rupiah } from "@/lib/format";
 import { tanggal } from "@/lib/format";
 import { db } from "@/lib/db";
+import { demoTournaments, withDemo } from "@/lib/demo";
 
 function Marquee() {
   const items = [
@@ -102,10 +103,14 @@ function Hero() {
 }
 
 async function TournamentGrid() {
-  const tournaments = await db.tournament.findMany({
-    orderBy: { startDate: "asc" },
-    include: { _count: { select: { registrations: true } } },
-  });
+  const tournaments = await withDemo(
+    () =>
+      db.tournament.findMany({
+        orderBy: { startDate: "asc" },
+        include: { _count: { select: { registrations: true } } },
+      }),
+    demoTournaments
+  );
   return (
     <section className="mx-auto max-w-6xl px-4 py-12">
       <div className="flex items-end justify-between gap-4">

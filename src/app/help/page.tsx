@@ -2,14 +2,19 @@ import { DemoBanner } from "@/components/layout/DemoBanner";
 import { Navbar, Footer } from "@/components/layout/Navbar";
 import { BrutaCard, BrutaBadge, BrutaLink } from "@/components/ui/bruta";
 import { db } from "@/lib/db";
+import { demoTickets, withDemo } from "@/lib/demo";
 import { helpTicketAction } from "@/lib/actions";
 
 export default async function HelpPage() {
-  const tickets = await db.helpTicket.findMany({
-    orderBy: { createdAt: "desc" },
-    include: { user: { select: { name: true } } },
-    take: 5,
-  });
+  const tickets = await withDemo(
+    () =>
+      db.helpTicket.findMany({
+        orderBy: { createdAt: "desc" },
+        include: { user: { select: { name: true } } },
+        take: 5,
+      }),
+    demoTickets
+  );
 
   return (
     <div className="flex min-h-full flex-1 flex-col bg-void text-cream">

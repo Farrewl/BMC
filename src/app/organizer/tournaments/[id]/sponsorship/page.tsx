@@ -3,6 +3,7 @@ import { DemoBanner } from "@/components/layout/DemoBanner";
 import { Navbar, Footer } from "@/components/layout/Navbar";
 import { BrutaCard, BrutaBadge } from "@/components/ui/bruta";
 import { db } from "@/lib/db";
+import { demoTournamentDetail, withDemo } from "@/lib/demo";
 import { rupiah } from "@/lib/format";
 import { createProposalAction } from "@/lib/actions";
 import { buildProposal } from "@/lib/proposal";
@@ -16,10 +17,14 @@ export default async function SponsorshipPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const t = await db.tournament.findUnique({
-    where: { id },
-    include: { proposals: { include: { deals: true } } },
-  });
+  const t = await withDemo(
+    () =>
+      db.tournament.findUnique({
+        where: { id },
+        include: { proposals: { include: { deals: true } } },
+      }),
+    demoTournamentDetail(id)
+  );
   if (!t) notFound();
 
   const preview = buildProposal({

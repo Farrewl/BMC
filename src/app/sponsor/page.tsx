@@ -2,34 +2,47 @@ import { DemoBanner } from "@/components/layout/DemoBanner";
 import { Navbar, Footer } from "@/components/layout/Navbar";
 import { BrutaCard, BrutaBadge, BrutaLink } from "@/components/ui/bruta";
 import { db } from "@/lib/db";
+import { demoProposals, demoDeals, demoAdSlots, withDemo } from "@/lib/demo";
 import { rupiah } from "@/lib/format";
 import { calcSponsorDeal } from "@/lib/fees";
 import { bookAdAction } from "@/lib/actions";
 
 export default async function SponsorHome() {
-  const proposals = await db.sponsorProposal.findMany({
-    orderBy: { createdAt: "desc" },
-    include: {
-      tournament: { select: { title: true } },
-      deals: { include: { sponsor: { select: { name: true } } } },
-    },
-    take: 6,
-  });
-  const deals = await db.sponsorDeal.findMany({
-    orderBy: { createdAt: "desc" },
-    include: {
-      sponsor: { select: { name: true } },
-      proposal: { select: { title: true } },
-    },
-    take: 5,
-  });
-  const adSlots = await db.adSlot.findMany({
-    include: {
-      tournament: { select: { title: true } },
-      bookings: true,
-    },
-    take: 6,
-  });
+  const proposals = await withDemo(
+    () =>
+      db.sponsorProposal.findMany({
+        orderBy: { createdAt: "desc" },
+        include: {
+          tournament: { select: { title: true } },
+          deals: { include: { sponsor: { select: { name: true } } } },
+        },
+        take: 6,
+      }),
+    demoProposals
+  );
+  const deals = await withDemo(
+    () =>
+      db.sponsorDeal.findMany({
+        orderBy: { createdAt: "desc" },
+        include: {
+          sponsor: { select: { name: true } },
+          proposal: { select: { title: true } },
+        },
+        take: 5,
+      }),
+    demoDeals
+  );
+  const adSlots = await withDemo(
+    () =>
+      db.adSlot.findMany({
+        include: {
+          tournament: { select: { title: true } },
+          bookings: true,
+        },
+        take: 6,
+      }),
+    demoAdSlots
+  );
   const totalPaid = deals
     .filter((d) => d.status === "PAID")
     .reduce((s, d) => s + d.amount, 0);

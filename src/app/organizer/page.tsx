@@ -3,16 +3,21 @@ import { DemoBanner } from "@/components/layout/DemoBanner";
 import { Navbar, Footer } from "@/components/layout/Navbar";
 import { BrutaCard, BrutaBadge, BrutaLink } from "@/components/ui/bruta";
 import { db } from "@/lib/db";
+import { demoTournaments, withDemo } from "@/lib/demo";
 import { rupiah, tanggal } from "@/lib/format";
 import { statusBadge, gameColor } from "@/lib/data";
 
 export default async function OrganizerHome() {
-  const tournaments = await db.tournament.findMany({
-    orderBy: { startDate: "asc" },
-    include: {
-      _count: { select: { registrations: true, matches: true } },
-    },
-  });
+  const tournaments = await withDemo(
+    () =>
+      db.tournament.findMany({
+        orderBy: { startDate: "asc" },
+        include: {
+          _count: { select: { registrations: true, matches: true } },
+        },
+      }),
+    demoTournaments
+  );
   const totalTeams = tournaments.reduce((s, t) => s + t._count.registrations, 0);
   const totalPrize = tournaments.reduce((s, t) => s + t.prizePool, 0);
 

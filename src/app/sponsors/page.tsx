@@ -2,17 +2,22 @@ import { DemoBanner } from "@/components/layout/DemoBanner";
 import { Navbar, Footer } from "@/components/layout/Navbar";
 import { BrutaCard, BrutaBadge, BrutaLink } from "@/components/ui/bruta";
 import { db } from "@/lib/db";
+import { demoProposals, withDemo } from "@/lib/demo";
 import { rupiah } from "@/lib/format";
 import { calcSponsorDeal } from "@/lib/fees";
 
 export default async function SponsorsPage() {
-  const proposals = await db.sponsorProposal.findMany({
-    orderBy: { createdAt: "desc" },
-    include: {
-      tournament: { select: { title: true, game: true } },
-      deals: true,
-    },
-  });
+  const proposals = await withDemo(
+    () =>
+      db.sponsorProposal.findMany({
+        orderBy: { createdAt: "desc" },
+        include: {
+          tournament: { select: { title: true, game: true } },
+          deals: true,
+        },
+      }),
+    demoProposals
+  );
 
   return (
     <div className="flex min-h-full flex-1 flex-col bg-void text-cream">

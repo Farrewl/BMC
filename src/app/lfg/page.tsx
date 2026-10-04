@@ -2,6 +2,7 @@ import { DemoBanner } from "@/components/layout/DemoBanner";
 import { Navbar, Footer } from "@/components/layout/Navbar";
 import { BrutaCard, BrutaBadge, BrutaLink } from "@/components/ui/bruta";
 import { db } from "@/lib/db";
+import { demoLfgPosts, withDemo } from "@/lib/demo";
 import { gameColor } from "@/lib/data";
 import { lfgInviteAction } from "@/lib/actions";
 
@@ -12,11 +13,15 @@ function initials(name: string) {
 }
 
 export default async function LfgPage() {
-  const posts = await db.lfgPost.findMany({
-    orderBy: { createdAt: "desc" },
-    include: { user: { select: { name: true } }, _count: { select: { invites: true } } },
-    take: 12,
-  });
+  const posts = await withDemo(
+    () =>
+      db.lfgPost.findMany({
+        orderBy: { createdAt: "desc" },
+        include: { user: { select: { name: true } }, _count: { select: { invites: true } } },
+        take: 12,
+      }),
+    demoLfgPosts
+  );
 
   return (
     <div className="flex min-h-full flex-1 flex-col bg-void text-cream">

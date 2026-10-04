@@ -2,14 +2,22 @@ import { DemoBanner } from "@/components/layout/DemoBanner";
 import { Navbar, Footer } from "@/components/layout/Navbar";
 import { BrutaCard, BrutaBadge, BrutaLink } from "@/components/ui/bruta";
 import { db } from "@/lib/db";
+import { demoTournaments, demoDeals, withDemo } from "@/lib/demo";
 import { rupiah } from "@/lib/format";
 import { calcSaasFee, calcSponsorDeal } from "@/lib/fees";
 
 export default async function BillingPage() {
-  const tournaments = await db.tournament.findMany({
-    include: { _count: { select: { registrations: true } } },
-  });
-  const deals = await db.sponsorDeal.findMany({ where: { status: "PAID" } });
+  const tournaments = await withDemo(
+    () =>
+      db.tournament.findMany({
+        include: { _count: { select: { registrations: true } } },
+      }),
+    demoTournaments
+  );
+  const deals = await withDemo(
+    () => db.sponsorDeal.findMany({ where: { status: "PAID" } }),
+    demoDeals
+  );
   const eventsHeld = tournaments.length;
   const saasRows = tournaments.map((t) => ({ t, fee: calcSaasFee(t.maxTeams, eventsHeld) }));
   const totalSaas = saasRows.reduce((s, r) => s + r.fee.net, 0);

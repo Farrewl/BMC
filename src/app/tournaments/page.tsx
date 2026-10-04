@@ -3,13 +3,18 @@ import { Navbar, Footer } from "@/components/layout/Navbar";
 import { BrutaCard, BrutaBadge, BrutaLink } from "@/components/ui/bruta";
 import { gameColor, statusBadge, rupiah } from "@/lib/data";
 import { db } from "@/lib/db";
+import { demoTournaments, withDemo } from "@/lib/demo";
 import { tanggal } from "@/lib/format";
 
 export default async function TournamentsPage() {
-  const tournaments = await db.tournament.findMany({
-    orderBy: { startDate: "asc" },
-    include: { _count: { select: { registrations: true } } },
-  });
+  const tournaments = await withDemo(
+    () =>
+      db.tournament.findMany({
+        orderBy: { startDate: "asc" },
+        include: { _count: { select: { registrations: true } } },
+      }),
+    demoTournaments
+  );
   return (
     <div className="flex min-h-full flex-1 flex-col bg-void text-cream">
       <DemoBanner />

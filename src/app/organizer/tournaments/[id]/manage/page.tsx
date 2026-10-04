@@ -4,6 +4,7 @@ import { DemoBanner } from "@/components/layout/DemoBanner";
 import { Navbar, Footer } from "@/components/layout/Navbar";
 import { BrutaCard, BrutaBadge } from "@/components/ui/bruta";
 import { db } from "@/lib/db";
+import { demoTournamentDetail, withDemo } from "@/lib/demo";
 import { rupiah, tanggal } from "@/lib/format";
 import { statusBadge, gameColor } from "@/lib/data";
 import {
@@ -18,13 +19,17 @@ export default async function ManagePage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const t = await db.tournament.findUnique({
-    where: { id },
-    include: {
-      registrations: { orderBy: { seed: "asc" } },
-      matches: { orderBy: [{ round: "asc" }, { position: "asc" }] },
-    },
-  });
+  const t = await withDemo(
+    () =>
+      db.tournament.findUnique({
+        where: { id },
+        include: {
+          registrations: { orderBy: { seed: "asc" } },
+          matches: { orderBy: [{ round: "asc" }, { position: "asc" }] },
+        },
+      }),
+    demoTournamentDetail(id)
+  );
   if (!t) notFound();
 
   const regName = new Map(t.registrations.map((r) => [r.id, r.teamName]));
