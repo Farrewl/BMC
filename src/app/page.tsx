@@ -1,6 +1,6 @@
 import { DemoBanner } from "@/components/layout/DemoBanner";
 import { Navbar, Footer } from "@/components/layout/Navbar";
-import { BrutaLink, BrutaCard, BrutaBadge, Sticker } from "@/components/ui/bruta";
+import { BrutaLink, BrutaBadge, BrutaCard, Sticker } from "@/components/ui/bruta";
 import { gameColor, statusBadge } from "@/lib/data";
 import { rupiah } from "@/lib/format";
 import { tanggal } from "@/lib/format";
@@ -55,8 +55,8 @@ function Hero() {
             produk pembayaran sungguhan.
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
-            <BrutaLink href="#demo" variant="primary">Coba Demo ↓</BrutaLink>
-            <BrutaLink href="/tournaments" variant="ghost">Lihat Turnamen</BrutaLink>
+            <BrutaLink href="/tournaments" variant="primary">Lihat Turnamen ↓</BrutaLink>
+            <BrutaLink href="/organizer" variant="ghost">Masuk Panitia</BrutaLink>
           </div>
           <div className="mt-6 flex flex-wrap gap-2">
             <BrutaBadge color="#B5E048">Auto-Bracket jalan</BrutaBadge>
@@ -203,53 +203,6 @@ function BracketPreview() {
   );
 }
 
-function MoneySection() {
-  return (
-    <section className="mx-auto grid max-w-6xl gap-5 px-4 py-12 md:grid-cols-3">
-      <BrutaCard className="bg-cream p-0 text-black">
-        <div className="border-b-[3px] border-black bg-sun px-4 py-3">
-          <p className="font-display text-sm font-black">KWITANSI · SAAS FEE</p>
-        </div>
-        <div className="zigzag-bottom bg-cream px-4 pb-8 pt-4 font-body text-sm font-medium">
-          <div className="flex justify-between"><span>Base / event</span><span>Rp 150.000</span></div>
-          <div className="mt-1 flex justify-between"><span>Diskon loyalitas ≥3 event</span><span>-10%</span></div>
-          <div className="mt-2 flex justify-between border-t-2 border-dashed border-black/30 pt-2 font-display font-black">
-            <span>TOTAL</span><span>Rp 135.000</span>
-          </div>
-        </div>
-      </BrutaCard>
-      <BrutaCard className="p-5">
-        <p className="font-display text-sm font-black text-poporange">SPONSOR DIRECTORY</p>
-        <div className="mt-3 h-5 overflow-hidden rounded-full border-[3px] border-black bg-cream">
-          <div className="progress-stripes h-full w-2/3 border-r-[3px] border-black" />
-        </div>
-        <p className="mt-2 font-body text-sm text-cream">
-          <b>Rp 3,2jt</b> / Rp 5jt · Kopi Kos Ndalem
-        </p>
-        <div className="mt-3 flex flex-wrap gap-2">
-          <BrutaBadge color="#FF6B1A">Logo jersey</BrutaBadge>
-          <BrutaBadge color="#22D3EE">Shoutout</BrutaBadge>
-          <BrutaBadge color="#B5E048">Banner stream</BrutaBadge>
-        </div>
-      </BrutaCard>
-      <BrutaCard className="p-5">
-        <div className="flex items-center gap-3">
-          <span className="flex h-12 w-12 items-center justify-center rounded-xl border-[3px] border-black bg-popcyan font-display text-lg font-black text-black">
-            VD
-          </span>
-          <div>
-            <p className="font-display text-sm font-black text-cream">LFG · Valorant</p>
-            <p className="font-body text-xs text-mutedcream">Duelist · Immortal · malam hari</p>
-          </div>
-        </div>
-        <BrutaLink href="/lfg" variant="cyan" className="mt-4 w-full !py-2 !text-xs">
-          Ajak Gabung →
-        </BrutaLink>
-      </BrutaCard>
-    </section>
-  );
-}
-
 export default function Home() {
   return (
     <div className="flex min-h-full flex-1 flex-col bg-void font-body text-cream">
@@ -260,18 +213,6 @@ export default function Home() {
         <Marquee />
         <TournamentGrid />
         <BracketPreview />
-        <MoneySection />
-        <section className="border-t-4 border-black bg-card">
-          <div id="demo" className="mx-auto flex max-w-6xl flex-col gap-3 px-4 py-8 sm:flex-row sm:items-center sm:justify-between">
-            <p className="font-display text-lg font-black text-cream">
-              SIAP DEMO 10 MENIT? IKUTI ALUR A → B → C.
-            </p>
-            <div className="flex gap-3">
-              <BrutaLink href="/organizer" variant="lime">Masuk Panitia</BrutaLink>
-              <BrutaLink href="/tournaments" variant="dark">Lihat Turnamen</BrutaLink>
-            </div>
-          </div>
-        </section>
       </main>
       <Footer />
     </div>
