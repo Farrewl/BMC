@@ -56,7 +56,7 @@ export async function Navbar({ active }: { active?: string }) {
             />
           </span>
           <span className="font-display text-xl font-black tracking-tight text-cream">
-            LombaEsport
+            NGE-SPORT
           </span>
         </Link>
         <nav className="hidden items-center gap-5 font-body text-sm font-medium text-mutedcream md:flex">
