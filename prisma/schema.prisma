@@ -72,7 +72,8 @@ model User {
   lfgPosts      LfgPost[]
   deals         SponsorDeal[]
   adBookings    AdBooking[]
-  tickets       HelpTicket[]
+  tickets       HelpTicket[]  @relation("TicketAuthor")
+  ticketReplies HelpTicket[]  @relation("TicketReplier")
 }
 
 model Tournament {
@@ -206,13 +207,17 @@ model AdBooking {
 }
 
 model HelpTicket {
-  id        String @id @default(cuid())
-  userId    String
-  user      User   @relation(fields: [userId], references: [id])
-  subject   String
-  message   String
-  status    String @default("OPEN")
-  createdAt DateTime @default(now())
+  id          String    @id @default(cuid())
+  userId      String
+  user        User      @relation("TicketAuthor", fields: [userId], references: [id], onDelete: Cascade)
+  subject     String
+  message     String
+  status      String    @default("OPEN")
+  reply       String?
+  repliedAt   DateTime?
+  repliedById String?
+  repliedBy   User?     @relation("TicketReplier", fields: [repliedById], references: [id])
+  createdAt   DateTime  @default(now())
 }
 
 model RejectedUser {

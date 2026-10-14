@@ -1,12 +1,12 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { Navbar, Footer } from "@/components/layout/Navbar";
-import { BrutaCard, BrutaBadge, BrutaLink } from "@/components/ui/bruta";
+import { BrutaCard, BrutaLink, BrutaTitle, Tag } from "@/components/ui/bruta";
 import { db } from "@/lib/db";
 import { demoProposalDetail, withDemo } from "@/lib/demo";
 import { rupiah } from "@/lib/format";
 import { calcSponsorDeal } from "@/lib/fees";
 import { fundProposalAction } from "@/lib/actions";
-import { requireSession } from "@/lib/session";
+import { HOME_BY_ROLE, requireSession } from "@/lib/session";
 
 const input =
   "w-full rounded-xl border-[3px] border-black bg-white px-3 py-2 font-body text-sm font-medium text-black";
@@ -17,7 +17,9 @@ export default async function ProposalDetail({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  await requireSession(`/sponsors/${id}`);
+  const session = await requireSession(`/sponsors/${id}`);
+  if (session.role === "PLAYER") redirect(HOME_BY_ROLE.PLAYER);
+
   const p = await withDemo(
     () =>
       db.sponsorProposal.findUnique({
@@ -30,6 +32,11 @@ export default async function ProposalDetail({
     demoProposalDetail(id)
   );
   if (!p) notFound();
+  const owner = (p.tournament as { organizerId?: string }).organizerId;
+  if (session.role === "ORGANIZER" && owner && owner !== session.userId) {
+    notFound();
+  }
+  const canFund = session.role === "SPONSOR";
 
   const paid = p.deals.filter((d) => d.status === "PAID").reduce((s, d) => s + d.amount, 0);
   const pct = Math.min(100, Math.round((paid / p.targetAmount) * 100));
@@ -40,10 +47,10 @@ export default async function ProposalDetail({
       <Navbar />
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-10">
         <div className="flex flex-wrap gap-2">
-          <BrutaBadge color="#FF6B1A">{p.tournament.game}</BrutaBadge>
-          <BrutaBadge color="#F8F4E8">{p.status}</BrutaBadge>
+          <Tag color="#FF6B1A">{p.tournament.game}</Tag>
+          <Tag color="#F8F4E8">{p.status}</Tag>
         </div>
-        <h1 className="mt-3 font-display text-3xl font-black">{p.title.toUpperCase()}</h1>
+        <BrutaTitle color="#FF6B1A">{p.title}</BrutaTitle>
         <p className="mt-2 font-body text-sm text-mutedcream">
           {p.tournament.title} · {p.expectedReach} penonton · {p.tournament.maxTeams} tim
         </p>
@@ -62,7 +69,9 @@ export default async function ProposalDetail({
 
           <BrutaCard className="h-fit bg-cream p-0 text-black">
             <div className="border-b-[3px] border-black bg-sun px-4 py-3">
-              <p className="font-display text-sm font-black">DANAI ACARA · FEE 10%</p>
+              <p className="font-display text-sm font-black">
+                {canFund ? "DANAI ACARA · FEE 10%" : "RINCIAN DANA · FEE 10%"}
+              </p>
             </div>
             <div className="px-4 pb-4 pt-4 font-body text-sm font-medium">
               <div className="flex justify-between"><span>Contoh nominal</span><span>{rupiah(1_000_000)}</span></div>
@@ -70,6 +79,7 @@ export default async function ProposalDetail({
               <div className="mt-2 flex justify-between border-t-2 border-dashed border-black/30 pt-2 font-display font-black">
                 <span>PANITIA TERIMA</span><span>{rupiah(demo.netToOrganizer)}</span>
               </div>
+              {canFund ? (
               <form action={fundProposalAction} className="mt-4 space-y-2">
                 <input type="hidden" name="proposalId" value={p.id} />
                 <input name="amount" type="number" min={50000} defaultValue={1000000} required className={input} />
@@ -77,6 +87,13 @@ export default async function ProposalDetail({
                   Danai Acara →
                 </button>
               </form>
+              ) : (
+                <p className="mt-4 rounded-xl border-2 border-black bg-elevated px-3 py-2 font-body text-xs text-cream">
+                  {session.role === "ORGANIZER"
+                    ? "Ini proposal turnamen kamu — daftar pendana ada di bawah."
+                    : "Hanya akun Sponsor yang bisa mendanai proposal."}
+                </p>
+              )}
               <div className="mt-3 space-y-2">
                 {p.deals.slice(0, 3).map((d) => (
                   <div key={d.id} className="flex justify-between rounded-lg border-2 border-black bg-white px-2 py-1 font-body text-xs font-bold">

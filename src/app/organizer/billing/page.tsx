@@ -1,5 +1,5 @@
 import { Navbar, Footer } from "@/components/layout/Navbar";
-import { BrutaCard, BrutaBadge, BrutaLink } from "@/components/ui/bruta";
+import { BrutaCard, BrutaLink, BrutaTitle, Tag } from "@/components/ui/bruta";
 import { db } from "@/lib/db";
 import { demoTournaments, demoDeals, withDemo } from "@/lib/demo";
 import { rupiah } from "@/lib/format";
@@ -30,8 +30,7 @@ export default async function BillingPage() {
     <div className="flex min-h-full flex-1 flex-col bg-void text-cream">
       <Navbar active="Panitia" />
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-10">
-        <BrutaBadge color="#FFD02B">Panitia · Billing</BrutaBadge>
-        <h1 className="mt-3 font-display text-3xl font-black">BILLING</h1>
+        <BrutaTitle color="#FFD02B">Billing</BrutaTitle>
 
         <div className="mt-6 grid gap-4 sm:grid-cols-3">
           <BrutaCard className="p-4">
@@ -51,7 +50,7 @@ export default async function BillingPage() {
         <BrutaCard className="mt-6 p-5">
           <div className="flex items-center justify-between">
             <p className="font-display text-sm font-black">RINCIAN SAAS PER EVENT</p>
-            {loyal && <BrutaBadge color="#B5E048">Langganan -10%</BrutaBadge>}
+            {loyal && <Tag color="#B5E048">Langganan -10%</Tag>}
           </div>
           <div className="mt-3 space-y-2">
             {saasRows.map(({ t, fee }) => (

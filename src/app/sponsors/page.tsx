@@ -1,15 +1,22 @@
 import { Navbar, Footer } from "@/components/layout/Navbar";
-import { BrutaCard, BrutaBadge, BrutaLink } from "@/components/ui/bruta";
+import { BrutaCard, BrutaLink, BrutaTitle, Tag } from "@/components/ui/bruta";
 import { db } from "@/lib/db";
 import { demoProposals, withDemo } from "@/lib/demo";
 import { rupiah } from "@/lib/format";
-import { requireSession } from "@/lib/session";
+import { HOME_BY_ROLE, requireSession } from "@/lib/session";
+import { redirect } from "next/navigation";
 
 export default async function SponsorsPage() {
-  await requireSession("/sponsors");
+  const session = await requireSession("/sponsors");
+  if (session.role === "PLAYER") redirect(HOME_BY_ROLE.PLAYER);
+
   const proposals = await withDemo(
     () =>
       db.sponsorProposal.findMany({
+        where:
+          session.role === "ORGANIZER"
+            ? { tournament: { organizerId: session.userId } }
+            : undefined,
         orderBy: { createdAt: "desc" },
         include: {
           tournament: { select: { title: true, game: true } },
@@ -23,8 +30,7 @@ export default async function SponsorsPage() {
     <div className="flex min-h-full flex-1 flex-col bg-void text-cream">
       <Navbar />
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-10">
-        <BrutaBadge color="#FF6B1A">Sponsor Directory</BrutaBadge>
-        <h1 className="mt-3 font-display text-3xl font-black">SPONSOR DIRECTORY</h1>
+        <BrutaTitle color="#FF6B1A">Sponsor Directory</BrutaTitle>
         <div className="mt-6 grid gap-5 sm:grid-cols-2">
           {proposals.map((p) => {
             const paid = p.deals
@@ -41,8 +47,8 @@ export default async function SponsorsPage() {
             return (
               <BrutaCard key={p.id} className="p-5">
                 <div className="flex flex-wrap gap-2">
-                  <BrutaBadge color="#FF6B1A">{p.tournament.game}</BrutaBadge>
-                  <BrutaBadge color="#F8F4E8">{p.status}</BrutaBadge>
+                  <Tag color="#FF6B1A">{p.tournament.game}</Tag>
+                  <Tag color="#F8F4E8">{p.status}</Tag>
                 </div>
                 <p className="mt-3 font-display text-lg font-black">{p.title}</p>
                 <p className="mt-1 font-body text-xs text-mutedcream">
@@ -59,14 +65,16 @@ export default async function SponsorsPage() {
                 </p>
                 <div className="mt-3 flex flex-wrap gap-2">
                   {benefits.slice(0, 3).map((b) => (
-                    <BrutaBadge key={b} color="#B5E048">{b}</BrutaBadge>
+                    <Tag key={b} color="#B5E048">{b}</Tag>
                   ))}
                 </div>
-                <BrutaLink href="/sponsor" variant="sun" className="mt-4 w-full !py-2 !text-xs">
-                  Danai via Dashboard Sponsor →
-                </BrutaLink>
+                {session.role === "SPONSOR" ? (
+                  <BrutaLink href="/sponsor" variant="sun" className="mt-4 w-full !py-2 !text-xs">
+                    Danai via Dashboard Sponsor →
+                  </BrutaLink>
+                ) : null}
                 <BrutaLink href={`/sponsors/${p.id}`} variant="dark" className="mt-2 w-full !py-2 !text-xs">
-                  Detail + Danai →
+                  Detail{p.status === "OPEN" && session.role === "SPONSOR" ? " + Danai" : ""} →
                 </BrutaLink>
               </BrutaCard>
             );

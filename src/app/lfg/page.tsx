@@ -1,5 +1,5 @@
 import { Navbar, Footer } from "@/components/layout/Navbar";
-import { BrutaCard, BrutaBadge, BrutaLink } from "@/components/ui/bruta";
+import { BrutaCard, BrutaLink, BrutaTitle, Tag } from "@/components/ui/bruta";
 import { db } from "@/lib/db";
 import { demoLfgPosts, withDemo } from "@/lib/demo";
 import { gameColor } from "@/lib/data";
@@ -28,8 +28,7 @@ export default async function LfgPage() {
     <div className="flex min-h-full flex-1 flex-col bg-void text-cream">
       <Navbar />
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-10">
-        <BrutaBadge color="#22D3EE">Papan LFG</BrutaBadge>
-        <h1 className="mt-3 font-display text-3xl font-black">PAPAN LFG</h1>
+        <BrutaTitle color="#22D3EE">Papan LFG</BrutaTitle>
         <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {posts.map((p, i) => (
             <BrutaCard key={p.id} className="p-5">
@@ -46,8 +45,8 @@ export default async function LfgPage() {
                 </div>
               </div>
               <div className="mt-3 flex flex-wrap gap-2">
-                <BrutaBadge color={gameColor(p.game)}>{p.role}</BrutaBadge>
-                <BrutaBadge color="#F8F4E8">{p.playStyle}</BrutaBadge>
+                <Tag color={gameColor(p.game)}>{p.role}</Tag>
+                <Tag color="#F8F4E8">{p.playStyle}</Tag>
               </div>
               <p className="mt-3 font-body text-sm text-cream">{p.bio}</p>
               <p className="mt-1 font-body text-xs text-mutedcream">

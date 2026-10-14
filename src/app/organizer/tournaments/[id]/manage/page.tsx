@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Navbar, Footer } from "@/components/layout/Navbar";
-import { BrutaCard, BrutaBadge } from "@/components/ui/bruta";
+import { BrutaCard, BrutaTitle, Tag } from "@/components/ui/bruta";
 import { db } from "@/lib/db";
 import { demoTournamentDetail, withDemo } from "@/lib/demo";
 import { rupiah, tanggal } from "@/lib/format";
@@ -48,13 +48,10 @@ export default async function ManagePage({
       <Navbar active="Panitia" />
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-10">
         <div className="flex flex-wrap items-center gap-2">
-          <BrutaBadge color="#8B5CF6">Kelola · Panitia</BrutaBadge>
-          <BrutaBadge color={statusBadge(t.status)}>{t.status}</BrutaBadge>
-          <BrutaBadge color={gameColor(t.game)}>{t.game}</BrutaBadge>
+          <Tag color={statusBadge(t.status)}>{t.status}</Tag>
+          <Tag color={gameColor(t.game)}>{t.game}</Tag>
         </div>
-        <h1 className="mt-3 font-display text-3xl font-black">
-          {t.title.toUpperCase()}
-        </h1>
+        <BrutaTitle color="#8B5CF6">{t.title}</BrutaTitle>
         <p className="mt-2 font-body text-sm text-mutedcream">
           {t.registrations.length}/{t.maxTeams} tim · Prize {rupiah(t.prizePool)}{" "}
           · Mulai {tanggal(t.startDate)}
@@ -80,11 +77,11 @@ export default async function ManagePage({
                   <span className="font-body text-sm font-bold">
                     #{i + 1} {r.teamName}
                   </span>
-                  <BrutaBadge
+                  <Tag
                     color={r.paymentStatus === "PAID" ? "#22C55E" : "#F59E0B"}
                   >
                     {r.paymentStatus}
-                  </BrutaBadge>
+                  </Tag>
                 </div>
               ))}
             </div>

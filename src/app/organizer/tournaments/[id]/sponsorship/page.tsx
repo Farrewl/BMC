@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { Navbar, Footer } from "@/components/layout/Navbar";
-import { BrutaCard, BrutaBadge } from "@/components/ui/bruta";
+import { BrutaCard, BrutaTitle } from "@/components/ui/bruta";
+import { PrintButton } from "@/components/ui/PrintButton";
 import { db } from "@/lib/db";
 import { demoTournamentDetail, withDemo } from "@/lib/demo";
 import { createProposalAction } from "@/lib/actions";
@@ -42,8 +43,7 @@ export default async function SponsorshipPage({
     <div className="flex min-h-full flex-1 flex-col bg-void text-cream">
       <Navbar active="Panitia" />
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-10">
-        <BrutaBadge color="#FF6B1A">Panitia · Proposal Sponsor</BrutaBadge>
-        <h1 className="mt-3 font-display text-3xl font-black">{t.title.toUpperCase()}</h1>
+        <BrutaTitle color="#FF6B1A">{t.title}</BrutaTitle>
 
         <div className="mt-6 grid gap-5 lg:grid-cols-2">
           <BrutaCard className="p-5">
@@ -79,12 +79,7 @@ export default async function SponsorshipPage({
             <pre className="mt-3 max-h-96 overflow-auto whitespace-pre-wrap rounded-xl border-2 border-black bg-elevated p-3 font-body text-xs">
               {preview}
             </pre>
-            <button
-              onClick={() => window.print()}
-              className="mt-3 w-full cursor-pointer rounded-xl border-[3px] border-black bg-cream px-4 py-2 font-display text-xs font-bold text-black"
-            >
-              Cetak / PDF 🖨
-            </button>
+            <PrintButton />
           </BrutaCard>
         </div>
       </main>

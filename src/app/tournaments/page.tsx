@@ -1,5 +1,5 @@
 import { Navbar, Footer } from "@/components/layout/Navbar";
-import { BrutaBadge, BrutaLink } from "@/components/ui/bruta";
+import { BrutaLink, Tag } from "@/components/ui/bruta";
 import { gameColor, statusBadge, rupiah } from "@/lib/data";
 import { db } from "@/lib/db";
 import { demoTournaments, withDemo } from "@/lib/demo";
@@ -30,7 +30,7 @@ export default async function TournamentsPage() {
               </div>
               <div className="flex items-center justify-between p-4">
                 <div className="flex items-center gap-2">
-                  <BrutaBadge color={statusBadge(t.status)}>{t.status}</BrutaBadge>
+                  <Tag color={statusBadge(t.status)}>{t.status}</Tag>
                   <span className="font-body text-xs text-mutedcream">{t._count.registrations}/{t.maxTeams} tim</span>
                 </div>
                 <span className="font-display text-sm font-black text-sun">{rupiah(t.prizePool)}</span>

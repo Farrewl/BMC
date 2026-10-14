@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { Navbar, Footer } from "@/components/layout/Navbar";
-import { BrutaCard, BrutaBadge, BrutaLink } from "@/components/ui/bruta";
+import { BrutaCard, BrutaLink, Tag } from "@/components/ui/bruta";
 import { DEMO_ACCOUNTS, HOME_BY_ROLE, getSession, loginAction } from "@/lib/session";
 
 const input =
@@ -102,7 +102,7 @@ export default async function LoginPage({
                       className="bruta-press block w-full cursor-pointer rounded-2xl border-[3px] border-black bg-card p-4 text-left shadow-bruta"
                     >
                       <div className="flex items-center justify-between gap-3">
-                        <BrutaBadge color={accountColor[a.role]}>{a.label}</BrutaBadge>
+                        <Tag color={accountColor[a.role]}>{a.label}</Tag>
                         <span className="font-display text-[11px] font-bold uppercase tracking-wide text-sun">
                           Masuk →
                         </span>

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Navbar, Footer } from "@/components/layout/Navbar";
-import { BrutaCard, BrutaBadge, BrutaLink } from "@/components/ui/bruta";
+import { BrutaCard, BrutaLink, BrutaTitle, Tag } from "@/components/ui/bruta";
 import { db } from "@/lib/db";
 import { demoTournaments, withDemo } from "@/lib/demo";
 import { rupiah, tanggal } from "@/lib/format";
@@ -26,10 +26,7 @@ export default async function OrganizerHome() {
     <div className="flex min-h-full flex-1 flex-col bg-void text-cream">
       <Navbar active="Panitia" />
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-10">
-        <BrutaBadge color="#A98BFB">Organizer · Panitia</BrutaBadge>
-        <h1 className="mt-3 font-display text-3xl font-black">
-          DASHBOARD PANITIA
-        </h1>
+        <BrutaTitle color="#8B5CF6">Dashboard Panitia</BrutaTitle>
         <div className="mt-4 flex flex-wrap gap-2">
           <BrutaLink href="/organizer/tournaments/new" variant="sun" className="!py-2 !text-xs">
             + Buat Turnamen
@@ -78,9 +75,9 @@ export default async function OrganizerHome() {
               </div>
               <div className="flex items-center justify-between p-4">
                 <div className="flex items-center gap-2">
-                  <BrutaBadge color={statusBadge(t.status)}>
+                  <Tag color={statusBadge(t.status)}>
                     {t.status}
-                  </BrutaBadge>
+                  </Tag>
                   <span className="font-body text-xs text-mutedcream">
                     {t._count.registrations}/{t.maxTeams} tim
                     {t._count.matches > 0 && ` · ${t._count.matches} match`}

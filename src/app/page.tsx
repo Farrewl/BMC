@@ -1,6 +1,6 @@
 import { Navbar, Footer } from "@/components/layout/Navbar";
 import Link from "next/link";
-import { BrutaLink, BrutaBadge, BrutaCard, Sticker } from "@/components/ui/bruta";
+import { BrutaLink, BrutaCard, Sticker, Tag } from "@/components/ui/bruta";
 import { gameColor, statusBadge } from "@/lib/data";
 import { rupiah } from "@/lib/format";
 import { tanggal } from "@/lib/format";
@@ -162,7 +162,6 @@ async function TournamentGrid() {
         <h2 className="font-display text-2xl font-black text-cream">
           TURNAMEN <span className="text-sun">AKTIF</span>
         </h2>
-        <BrutaBadge color="#F8F4E8">Turnamen</BrutaBadge>
       </div>
       <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {tournaments.map((t) => (
@@ -183,7 +182,7 @@ async function TournamentGrid() {
             </div>
             <div className="space-y-3 p-4">
               <div className="flex items-center justify-between">
-                <BrutaBadge color={statusBadge(t.status)}>{t.status}</BrutaBadge>
+                <Tag color={statusBadge(t.status)}>{t.status}</Tag>
                 <span className="font-body text-xs font-bold text-mutedcream">{t._count.registrations}/{t.maxTeams} tim</span>
               </div>
               <p className="font-display text-xl font-black text-sun">{rupiah(t.prizePool)}</p>

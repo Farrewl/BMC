@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Navbar, Footer } from "@/components/layout/Navbar";
-import { BrutaCard, BrutaBadge, BrutaLink } from "@/components/ui/bruta";
+import { BrutaCard, BrutaLink, BrutaTitle, Tag } from "@/components/ui/bruta";
 import { gameColor, statusBadge } from "@/lib/data";
 import { rupiah, tanggal } from "@/lib/format";
 import { db } from "@/lib/db";
@@ -36,10 +36,10 @@ export default async function Detail({ params }: { params: Promise<{ id: string 
       <Navbar />
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-10">
         <div className="flex flex-wrap items-center gap-2">
-          <BrutaBadge color={statusBadge(t.status)}>{t.status}</BrutaBadge>
-          <BrutaBadge color={gameColor(t.game)}>{t.game}</BrutaBadge>
+          <Tag color={statusBadge(t.status)}>{t.status}</Tag>
+          <Tag color={gameColor(t.game)}>{t.game}</Tag>
         </div>
-        <h1 className="mt-3 font-display text-3xl font-black">{t.title.toUpperCase()}</h1>
+        <BrutaTitle color="#F8F4E8">{t.title}</BrutaTitle>
         <p className="mt-2 max-w-2xl font-body text-sm text-mutedcream">{t.description}</p>
 
         <div className="mt-6 grid gap-4 sm:grid-cols-4">
@@ -66,7 +66,7 @@ export default async function Detail({ params }: { params: Promise<{ id: string 
               {t.registrations.map((r, i) => (
                 <div key={r.id} className="flex items-center justify-between rounded-xl border-2 border-black bg-elevated px-3 py-2">
                   <span className="font-body text-sm font-bold">#{i + 1} {r.teamName}</span>
-                  <BrutaBadge color={r.paymentStatus === "PAID" ? "#22C55E" : "#F59E0B"}>{r.paymentStatus}</BrutaBadge>
+                  <Tag color={r.paymentStatus === "PAID" ? "#22C55E" : "#F59E0B"}>{r.paymentStatus}</Tag>
                 </div>
               ))}
             </div>

@@ -1,5 +1,5 @@
 import { Navbar, Footer } from "@/components/layout/Navbar";
-import { BrutaCard, BrutaBadge, BrutaLink } from "@/components/ui/bruta";
+import { BrutaCard, BrutaLink, BrutaTitle, Tag } from "@/components/ui/bruta";
 import { db } from "@/lib/db";
 import { demoTournaments, withDemo } from "@/lib/demo";
 import { rupiah, tanggal } from "@/lib/format";
@@ -28,8 +28,7 @@ export default async function PlayerHome() {
     <div className="flex min-h-full flex-1 flex-col bg-void text-cream">
       <Navbar active="Player" />
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-10">
-        <BrutaBadge color="#22D3EE">Player · Gamer</BrutaBadge>
-        <h1 className="mt-3 font-display text-3xl font-black">DASHBOARD PLAYER</h1>
+        <BrutaTitle color="#22D3EE">Dashboard Player</BrutaTitle>
 
         <div className="mt-6 grid gap-4 sm:grid-cols-2">
           <BrutaCard className="p-4">
@@ -54,7 +53,7 @@ export default async function PlayerHome() {
                 </div>
                 <div className="space-y-2 p-4">
                   <div className="flex items-center justify-between">
-                    <BrutaBadge color={statusBadge(t.status)}>{t.status}</BrutaBadge>
+                    <Tag color={statusBadge(t.status)}>{t.status}</Tag>
                     <span className="font-body text-xs text-mutedcream">{t._count.registrations}/{t.maxTeams} tim</span>
                   </div>
                   <div className="rounded-xl border-2 border-black bg-elevated px-3 py-2 font-body text-xs">

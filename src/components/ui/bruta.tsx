@@ -51,7 +51,7 @@ export function BrutaCard({
   );
 }
 
-export function BrutaBadge({
+export function Tag({
   color = "#FFD02B",
   className,
   children,
@@ -70,6 +70,31 @@ export function BrutaBadge({
     >
       {children}
     </span>
+  );
+}
+
+export function BrutaTitle({
+  color = "#FFD02B",
+  text = "text-black",
+  className,
+  children,
+}: {
+  color?: string;
+  text?: string;
+  className?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <h1
+      className={cn(
+        "mt-6 inline-block rounded-2xl border-[3px] border-black px-5 py-3 font-display text-3xl font-black uppercase shadow-bruta",
+        text,
+        className
+      )}
+      style={{ background: color }}
+    >
+      {children}
+    </h1>
   );
 }
 

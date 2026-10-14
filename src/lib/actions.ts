@@ -276,3 +276,31 @@ export async function helpTicketAction(formData: FormData) {
 
   revalidatePath("/help");
 }
+
+const replySchema = z.object({
+  ticketId: z.string().min(1),
+  reply: z.string().min(3).max(500),
+});
+
+export async function replyTicketAction(formData: FormData) {
+  const session = await requireRole("ADMIN");
+  const parsed = replySchema.safeParse({
+    ticketId: formData.get("ticketId"),
+    reply: formData.get("reply"),
+  });
+  if (!parsed.success) redirect("/admin?error=balasan");
+
+  await db.helpTicket.update({
+    where: { id: parsed.data.ticketId },
+    data: {
+      reply: parsed.data.reply,
+      repliedAt: new Date(),
+      repliedById: session.userId,
+      status: "REPLIED",
+    },
+  });
+
+  revalidatePath("/admin");
+  revalidatePath("/help");
+  redirect("/admin");
+}

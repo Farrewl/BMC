@@ -1,7 +1,8 @@
 import { Navbar, Footer } from "@/components/layout/Navbar";
-import { BrutaCard, BrutaBadge } from "@/components/ui/bruta";
+import { BrutaCard, BrutaTitle, Tag } from "@/components/ui/bruta";
 import { db } from "@/lib/db";
 import { rupiah, tanggal } from "@/lib/format";
+import { replyTicketAction } from "@/lib/actions";
 import {
   approveUserAction,
   rejectUserAction,
@@ -78,13 +79,22 @@ export default async function AdminPage({
   const rejected = await db.rejectedUser.findMany({
     orderBy: { rejectedAt: "desc" },
   });
+  const tickets = await db.helpTicket.findMany({
+    orderBy: { createdAt: "desc" },
+    include: {
+      user: { select: { name: true, email: true } },
+      repliedBy: { select: { name: true } },
+    },
+    take: 50,
+  });
 
   return (
     <div className="flex min-h-full flex-1 flex-col bg-void text-cream">
       <Navbar />
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-10">
-        <BrutaBadge color="#FF2E2E">Admin · Pemantau</BrutaBadge>
-        <h1 className="mt-3 font-display text-3xl font-black">DASHBOARD ADMIN</h1>
+        <BrutaTitle color="#FF2E2E" text="text-white">
+          Dashboard Admin
+        </BrutaTitle>
 
         {/* STATISTIK */}
         <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
@@ -110,6 +120,11 @@ export default async function AdminPage({
             Alasan penolakan minimal 3 huruf.
           </p>
         ) : null}
+        {error === "balasan" ? (
+          <p className="mt-6 rounded-xl border-[3px] border-black bg-lose px-3 py-2 font-body text-sm font-bold text-white shadow-bruta-sm">
+            Balasan minimal 3 huruf.
+          </p>
+        ) : null}
 
         {/* PENGAJUAN MENUNGGU */}
         <div className="mt-8">
@@ -127,7 +142,7 @@ export default async function AdminPage({
                   <div className="flex flex-wrap items-start justify-between gap-3">
                     <div>
                       <div className="flex items-center gap-2">
-                        <BrutaBadge color={roleColor[u.role]}>{roleLabel[u.role]}</BrutaBadge>
+                        <Tag color={roleColor[u.role]}>{roleLabel[u.role]}</Tag>
                         <span className="font-body text-xs text-mutedcream">
                           {tanggal(u.createdAt)}
                         </span>
@@ -199,7 +214,7 @@ export default async function AdminPage({
                     <td className="px-4 py-3 font-bold">{u.name}</td>
                     <td className="px-4 py-3 text-mutedcream">{u.email}</td>
                     <td className="px-4 py-3">
-                      <BrutaBadge color={roleColor[u.role]}>{roleLabel[u.role]}</BrutaBadge>
+                      <Tag color={roleColor[u.role]}>{roleLabel[u.role]}</Tag>
                     </td>
                     <td className="px-4 py-3 text-mutedcream">{u.orgName ?? "—"}</td>
                     <td className="px-4 py-3">
@@ -245,7 +260,7 @@ export default async function AdminPage({
                       <td className="px-4 py-3 font-bold">{r.name}</td>
                       <td className="px-4 py-3 text-mutedcream">{r.email}</td>
                       <td className="px-4 py-3">
-                        <BrutaBadge color={roleColor[r.role]}>{roleLabel[r.role]}</BrutaBadge>
+                        <Tag color={roleColor[r.role]}>{roleLabel[r.role]}</Tag>
                       </td>
                       <td className="px-4 py-3 text-mutedcream">{r.reason}</td>
                       <td className="px-4 py-3 text-mutedcream">
@@ -256,6 +271,69 @@ export default async function AdminPage({
                 </tbody>
               </table>
             </BrutaCard>
+          )}
+        </div>
+
+        {/* PESAN BANTUAN */}
+        <div className="mt-8">
+          <h2 className="font-display text-xl font-black">PESAN BANTUAN</h2>
+          {tickets.length === 0 ? (
+            <BrutaCard className="mt-3 p-5 font-body text-sm text-mutedcream">
+              Belum ada pesan masuk.
+            </BrutaCard>
+          ) : (
+            <div className="mt-3 space-y-3">
+              {tickets.map((t) => (
+                <BrutaCard key={t.id} className="p-4">
+                  <div className="flex flex-wrap items-start justify-between gap-3">
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-2">
+                        <Tag color={t.status === "REPLIED" ? "#22C55E" : "#F59E0B"}>
+                          {t.status === "REPLIED" ? "Dibalas" : "Menunggu"}
+                        </Tag>
+                        <span className="font-body text-xs text-mutedcream">
+                          {tanggal(t.createdAt)}
+                        </span>
+                      </div>
+                      <p className="mt-2 font-display text-base font-black text-cream">
+                        {t.subject}
+                      </p>
+                      <p className="font-body text-xs text-mutedcream">
+                        {t.user.name} · {t.user.email}
+                      </p>
+                      <p className="mt-2 font-body text-sm text-cream">{t.message}</p>
+                    </div>
+                  </div>
+                  {t.reply ? (
+                    <div className="mt-3 rounded-xl border-2 border-black bg-elevated px-3 py-2">
+                      <p className="font-display text-[11px] font-bold uppercase tracking-wide text-win">
+                        Balasan Admin
+                        {t.repliedBy ? ` · ${t.repliedBy.name}` : ""}
+                        {t.repliedAt ? ` · ${tanggal(t.repliedAt)}` : ""}
+                      </p>
+                      <p className="mt-1 font-body text-sm text-cream">{t.reply}</p>
+                    </div>
+                  ) : (
+                    <form action={replyTicketAction} className="mt-3 flex flex-col gap-2 sm:flex-row">
+                      <input type="hidden" name="ticketId" value={t.id} />
+                      <input
+                        name="reply"
+                        required
+                        minLength={3}
+                        placeholder="Tulis balasan…"
+                        className="flex-1 rounded-xl border-[3px] border-black bg-white px-3 py-2 font-body text-xs font-medium text-black"
+                      />
+                      <button
+                        type="submit"
+                        className="bruta-press cursor-pointer rounded-xl border-[3px] border-black bg-sun px-4 py-2 font-display text-xs font-bold uppercase text-black shadow-bruta-sm"
+                      >
+                        Balas
+                      </button>
+                    </form>
+                  )}
+                </BrutaCard>
+              ))}
+            </div>
           )}
         </div>
       </main>

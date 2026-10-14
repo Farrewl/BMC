@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Footer, Navbar } from "@/components/layout/Navbar";
-import { BrutaBadge, BrutaLink } from "@/components/ui/bruta";
+import { BrutaLink } from "@/components/ui/bruta";
 
 export default function NotFound() {
   return (
@@ -8,8 +8,7 @@ export default function NotFound() {
       <Navbar />
       <main className="grid-line-dark flex flex-1 items-center justify-center px-4 py-20">
         <div className="text-center">
-          <BrutaBadge color="#FFD02B">Error 404</BrutaBadge>
-          <h1 className="mt-4 font-display text-5xl font-black sm:text-7xl">
+          <h1 className="font-display text-5xl font-black sm:text-7xl">
             GAME <span className="text-sun">OVER</span>
           </h1>
           <p className="mt-4 font-body text-sm text-mutedcream">
