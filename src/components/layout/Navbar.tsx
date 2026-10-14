@@ -10,12 +10,26 @@ const roleLabel: Record<Role, string> = {
   ADMIN: "Admin",
 };
 
-const navItems = [
-  { href: "/tournaments", label: "Turnamen" },
-  { href: "/lfg", label: "LFG" },
-  { href: "/sponsors", label: "Sponsor" },
-  { href: "/help", label: "Bantuan" },
+const roleHome: Record<Role, string> = {
+  ORGANIZER: "/organizer",
+  SPONSOR: "/sponsor",
+  PLAYER: "/player",
+  ADMIN: "/admin",
+};
+
+// only show items the current role can actually open
+const navAll: Array<{ href: string; label: string; roles: Role[] | "all" }> = [
+  { href: "/tournaments", label: "Turnamen", roles: "all" },
+  { href: "/lfg", label: "LFG", roles: ["ORGANIZER", "SPONSOR", "PLAYER", "ADMIN"] },
+  { href: "/sponsors", label: "Sponsor", roles: ["ORGANIZER", "SPONSOR", "ADMIN"] },
+  { href: "/help", label: "Bantuan", roles: "all" },
 ];
+
+const navItems = (role?: Role | null) =>
+  navAll.filter(
+    (item) =>
+      item.roles === "all" || (role != null && item.roles.includes(role))
+  );
 
 export async function Navbar({ active }: { active?: string }) {
   const session = await getSession();
@@ -38,7 +52,7 @@ export async function Navbar({ active }: { active?: string }) {
           </span>
         </Link>
         <nav className="hidden items-center gap-1 font-body text-sm font-medium md:flex">
-          {navItems.map((item) => (
+          {navItems(session?.role).map((item) => (
             <Link
               key={item.href}
               href={item.href}
@@ -59,11 +73,12 @@ export async function Navbar({ active }: { active?: string }) {
                 {session.name}
               </p>
             </div>
-            <div className="hidden sm:block">
-              <span className="inline-block rounded-xl border-[3px] border-black bg-paperdark px-3 py-2 font-display text-[11px] font-bold uppercase tracking-wide text-cream sm:px-4">
-                {roleLabel[session.role]}
-              </span>
-            </div>
+            <Link
+              href={roleHome[session.role]}
+              className="inline-block rounded-xl border-[3px] border-black bg-paperdark px-3 py-2 font-display text-[11px] font-bold uppercase tracking-wide text-cream hover:bg-elevated sm:px-4"
+            >
+              {roleLabel[session.role]}
+            </Link>
             <form action={logoutAction}>
               <button
                 type="submit"
