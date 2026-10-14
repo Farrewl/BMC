@@ -1,42 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/cn";
-import { getSession, logoutAction, switchRoleAction, type Role } from "@/lib/session";
-
-const roles = [
-  { role: "ORGANIZER", label: "Panitia", bg: "bg-arena text-white" },
-  { role: "SPONSOR", label: "Sponsor", bg: "bg-poporange text-black" },
-  { role: "PLAYER", label: "Player", bg: "bg-popcyan text-black" },
-] as const;
-
-export function RoleSwitcher({ active }: { active?: string }) {
-  return (
-    <div className="flex overflow-hidden rounded-xl border-[3px] border-black bg-elevated">
-      {roles.map((r) => {
-        const isActive = active === r.label;
-        return (
-          <form key={r.role} action={switchRoleAction}>
-            <input type="hidden" name="role" value={r.role} />
-            <button
-              type="submit"
-              className={cn(
-                "border-r-[3px] border-black px-3 py-2 font-display text-[11px] font-bold uppercase tracking-wide last:border-r-0 sm:px-4",
-                isActive ? r.bg : "text-cream hover:bg-paperdark"
-              )}
-            >
-              {r.label}
-            </button>
-          </form>
-        );
-      })}
-    </div>
-  );
-}
+import { getSession, logoutAction, type Role } from "@/lib/session";
 
 const roleLabel: Record<Role, string> = {
   ORGANIZER: "Panitia",
   SPONSOR: "Sponsor",
   PLAYER: "Player",
+  ADMIN: "Admin",
 };
 
 const navItems = [
@@ -92,7 +63,9 @@ export async function Navbar({ active }: { active?: string }) {
               </p>
             </div>
             <div className="hidden sm:block">
-              <RoleSwitcher active={active ?? roleLabel[session.role]} />
+              <span className="inline-block rounded-xl border-[3px] border-black bg-paperdark px-3 py-2 font-display text-[11px] font-bold uppercase tracking-wide text-cream sm:px-4">
+                {roleLabel[session.role]}
+              </span>
             </div>
             <form action={logoutAction}>
               <button

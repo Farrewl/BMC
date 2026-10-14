@@ -33,12 +33,19 @@ export default async function LoginPage({
         <section className="halftone-dark grid-line-dark">
           <div className="mx-auto grid max-w-5xl gap-8 px-4 py-12 md:grid-cols-2 md:items-start">
             <div>
-              <BrutaBadge color="#FF4D8D">Masuk</BrutaBadge>
               <h1 className="mt-4 font-display text-3xl font-black leading-tight sm:text-4xl">
                 MASUK KE <span className="text-sun">AKUN</span> KAMU
               </h1>
 
-              {error ? (
+              {error === "pending" ? (
+                <p className="mt-4 rounded-xl border-[3px] border-black bg-pending px-3 py-2 font-body text-sm font-bold text-black shadow-bruta-sm">
+                  Akun kamu menunggu verifikasi admin.
+                </p>
+              ) : error === "rejected" ? (
+                <p className="mt-4 rounded-xl border-[3px] border-black bg-lose px-3 py-2 font-body text-sm font-bold text-white shadow-bruta-sm">
+                  Pengajuan akun kamu ditolak.
+                </p>
+              ) : error ? (
                 <p className="mt-4 rounded-xl border-[3px] border-black bg-lose px-3 py-2 font-body text-sm font-bold text-white shadow-bruta-sm">
                   Akun tidak ditemukan.
                 </p>
@@ -77,8 +84,8 @@ export default async function LoginPage({
 
               <p className="mt-5 font-body text-sm text-mutedcream">
                 Belum punya akun?{" "}
-                <Link href="/login" className="font-bold text-sun underline">
-                  Hubungi panitia
+                <Link href="/register" className="font-bold text-sun underline">
+                  Registrasi
                 </Link>
               </p>
             </div>

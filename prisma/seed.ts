@@ -14,6 +14,7 @@ async function main() {
   await db.match.deleteMany();
   await db.registration.deleteMany();
   await db.helpTicket.deleteMany();
+  await db.rejectedUser.deleteMany();
   await db.tournament.deleteMany();
   await db.user.deleteMany();
 
@@ -22,7 +23,7 @@ async function main() {
       { name: "BEM FSM Undip", email: "bem@undip.ac.id", orgName: "BEM FSM Undip", city: "Semarang" },
       { name: "Himpunan Informatika", email: "himatif@undip.ac.id", orgName: "Himpunan Informatika", city: "Semarang" },
       { name: "Semarang Esports Community", email: "sec@komunitas.id", orgName: "SEC", city: "Semarang" },
-    ].map((u) => db.user.create({ data: { ...u, role: "ORGANIZER" } }))
+    ].map((u) => db.user.create({ data: { ...u, role: "ORGANIZER", approved: true } }))
   );
 
   const sponsors = await Promise.all(
@@ -32,7 +33,7 @@ async function main() {
       { name: "Toko Komputer Jaya", email: "jaya@komputer.id", orgName: "Jaya Komputer", city: "Semarang" },
       { name: "Laundry Kos Bersih", email: "laundry@bersih.id", orgName: "Laundry Bersih", city: "Tembalang" },
       { name: "Warung Makan Bu Sri", email: "busri@warung.id", orgName: "Warung Bu Sri", city: "Tembalang" },
-    ].map((u) => db.user.create({ data: { ...u, role: "SPONSOR" } }))
+    ].map((u) => db.user.create({ data: { ...u, role: "SPONSOR", approved: true } }))
   );
 
   const playerNames = [
@@ -42,10 +43,20 @@ async function main() {
   const players = await Promise.all(
     playerNames.map((n, i) =>
       db.user.create({
-        data: { name: `${n} Pratama`, email: `player${i + 1}@ngesport.id`, role: "PLAYER", city: "Semarang" },
+        data: { name: `${n} Pratama`, email: `player${i + 1}@ngesport.id`, role: "PLAYER", city: "Semarang", approved: true },
       })
     )
   );
+
+  await db.user.create({
+    data: {
+      name: "Admin suki",
+      email: "admin@ngesport.id",
+      role: "ADMIN",
+      city: "Semarang",
+      approved: true,
+    },
+  });
 
   const t1 = await db.tournament.create({
     data: {
@@ -234,7 +245,7 @@ async function main() {
     },
   });
 
-  console.log("Seed OK: 3 organizer, 5 sponsor, 12 player, 4 turnamen, 6 proposal, 10 LFG");
+  console.log("Seed OK: 3 organizer, 5 sponsor, 12 player, 1 admin, 4 turnamen, 6 proposal, 10 LFG");
 }
 
 main()

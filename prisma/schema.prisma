@@ -11,6 +11,7 @@ enum Role {
   ORGANIZER
   SPONSOR
   PLAYER
+  ADMIN
 }
 
 enum TournamentStatus {
@@ -64,6 +65,7 @@ model User {
   role        Role
   orgName     String?
   city        String?
+  approved    Boolean  @default(false)
   createdAt   DateTime @default(now())
   tournaments Tournament[]  @relation("Organizer")
   registrations Registration[]
@@ -211,4 +213,15 @@ model HelpTicket {
   message   String
   status    String @default("OPEN")
   createdAt DateTime @default(now())
+}
+
+model RejectedUser {
+  id         String   @id @default(cuid())
+  name       String
+  email      String
+  role       Role
+  orgName    String?
+  city       String?
+  reason     String
+  rejectedAt DateTime @default(now())
 }
