@@ -1,10 +1,12 @@
 import { Navbar, Footer } from "@/components/layout/Navbar";
+import Link from "next/link";
 import { BrutaLink, BrutaBadge, BrutaCard, Sticker } from "@/components/ui/bruta";
 import { gameColor, statusBadge } from "@/lib/data";
 import { rupiah } from "@/lib/format";
 import { tanggal } from "@/lib/format";
 import { db } from "@/lib/db";
 import { demoTournaments, withDemo } from "@/lib/demo";
+import type { Match, Registration } from "@prisma/client";
 
 function Marquee() {
   const items = [
@@ -197,57 +199,110 @@ async function TournamentGrid() {
   );
 }
 
-function BracketPreview() {
+function BracketPreview({
+  tournament,
+}: {
+  tournament: {
+    id: string;
+    title: string;
+    matches: Match[];
+    registrations: Pick<Registration, "id" | "teamName">[];
+  };
+}) {
+  if (tournament.matches.length === 0) return null;
+  const teams = new Map(tournament.registrations.map((r) => [r.id, r.teamName]));
+  const nameOf = (id: string | null | undefined) =>
+    (id && teams.get(id)) || "TBD";
+  const rounds = [...new Set(tournament.matches.map((m) => m.round))].sort(
+    (a, b) => a - b
+  );
   return (
     <section className="border-y-4 border-black bg-paperdark">
       <div className="mx-auto max-w-6xl px-4 py-12">
         <h2 className="font-display text-2xl font-black text-cream">
           BRACKET <span className="text-popcyan">SINGLE ELIMINATION</span>
         </h2>
+        <p className="mt-1 font-body text-xs text-mutedcream">
+          {tournament.title}
+        </p>
         <div className="mt-6 flex gap-6 overflow-x-auto pb-4">
-          {[
-            { round: "R1", cards: ["BYE vs Tim 6", "Tim 3 vs Tim 4", "Tim 2 vs Tim 7", "BYE vs Tim 5"] },
-            { round: "SF", cards: ["Tim 1 vs Pemenang R1-2", "Tim 2 vs Pemenang R1-3"] },
-            { round: "FINAL", cards: ["??? vs ???"] },
-          ].map((col) => (
-            <div key={col.round} className="min-w-[260px]">
+          {rounds.map((r) => (
+            <div key={r} className="min-w-[260px]">
               <p className="mb-3 inline-block rounded-lg border-[3px] border-black bg-cream px-3 py-1 font-display text-xs font-black text-black">
-                {col.round}
+                {r === rounds.length ? "FINAL" : r === 1 ? "R1" : `R${r}`}
               </p>
               <div className="space-y-4">
-                {col.cards.map((c, i) =>
-                  c.startsWith("BYE") ? (
-                    <div
-                      key={i}
-                      className="bye-stripes rounded-2xl border-[3px] border-black p-4 shadow-bruta"
-                    >
-                      <span className="inline-block rotate-[-3deg] font-comic text-2xl text-sun">
-                        BYE!
-                      </span>
-                      <p className="mt-1 font-body text-xs font-bold text-cream">{c}</p>
-                    </div>
-                  ) : (
-                    <div
-                      key={i}
-                      className="rounded-2xl border-[3px] border-black bg-cream p-3 text-black shadow-bruta"
-                    >
-                      <p className="font-body text-sm font-bold">{c}</p>
-                      <p className="mt-2 inline-block rounded-md border-2 border-black bg-poplime px-2 font-display text-[11px] font-black">
-                        KLIK → INPUT SKOR
-                      </p>
-                    </div>
-                  )
-                )}
+                {tournament.matches
+                  .filter((m) => m.round === r)
+                  .map((m) =>
+                    m.isBye ? (
+                      <div
+                        key={m.id}
+                        className="bye-stripes rounded-2xl border-[3px] border-black p-4 shadow-bruta"
+                      >
+                        <span className="inline-block rotate-[-3deg] font-comic text-2xl text-sun">
+                          BYE!
+                        </span>
+                        <p className="mt-1 font-body text-xs font-bold text-cream">
+                          {nameOf(m.winnerId)} lolos otomatis
+                        </p>
+                      </div>
+                    ) : (
+                      <div
+                        key={m.id}
+                        className={`rounded-2xl border-[3px] border-black p-3 shadow-bruta ${
+                          m.status === "DONE" ? "bg-poplime" : "bg-cream"
+                        } text-black`}
+                      >
+                        <div className="flex items-center justify-between font-body text-sm font-bold">
+                          <span>{nameOf(m.teamAId)}</span>
+                          <span className="font-display">
+                            {m.scoreA ?? "–"}
+                            {m.winnerId === m.teamAId && m.teamAId
+                              ? " ★"
+                              : ""}
+                          </span>
+                        </div>
+                        <div className="mt-1 flex items-center justify-between border-t-2 border-dashed border-black/20 pt-1 font-body text-sm font-bold">
+                          <span>{nameOf(m.teamBId)}</span>
+                          <span className="font-display">
+                            {m.scoreB ?? "–"}
+                            {m.winnerId === m.teamBId && m.teamBId
+                              ? " ★"
+                              : ""}
+                          </span>
+                        </div>
+                      </div>
+                    )
+                  )}
               </div>
             </div>
           ))}
         </div>
+        <Link
+          href={`/tournaments/${tournament.id}`}
+          className="bruta-press mt-6 inline-block rounded-xl border-[3px] border-black bg-sun px-5 py-2 font-display text-xs font-bold uppercase text-black shadow-bruta"
+        >
+          Lihat Bracket Lengkap →
+        </Link>
       </div>
     </section>
   );
 }
 
-export default function Home() {
+export default async function Home() {
+  const bracketTournament = await withDemo(
+    () =>
+      db.tournament.findFirst({
+        where: { matches: { some: {} } },
+        orderBy: { startDate: "asc" },
+        include: {
+          matches: { orderBy: [{ round: "asc" }, { position: "asc" }] },
+          registrations: { select: { id: true, teamName: true } },
+        },
+      }),
+    null
+  );
   return (
     <div className="flex min-h-full flex-1 flex-col bg-void font-body text-cream">
       <Navbar />
@@ -256,7 +311,9 @@ export default function Home() {
         <Marquee />
         <LiveNow />
         <TournamentGrid />
-        <BracketPreview />
+        {bracketTournament && (
+          <BracketPreview tournament={bracketTournament} />
+        )}
       </main>
       <Footer />
     </div>

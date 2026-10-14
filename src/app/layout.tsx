@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Nge-Sport — Platform Turnamen E-Sports",
+  title: "Nge-Sport",
   description:
     "Kelola turnamen e-sports kampus: bracket otomatis, matchmaking sponsor UMKM, LFG, dan live stream dalam satu platform.",
   icons: {
