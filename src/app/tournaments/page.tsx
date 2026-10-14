@@ -4,8 +4,10 @@ import { gameColor, statusBadge, rupiah } from "@/lib/data";
 import { db } from "@/lib/db";
 import { demoTournaments, withDemo } from "@/lib/demo";
 import { tanggal } from "@/lib/format";
+import { getSession } from "@/lib/session";
 
 export default async function TournamentsPage() {
+  const session = await getSession();
   const tournaments = await withDemo(
     () =>
       db.tournament.findMany({
@@ -37,7 +39,9 @@ export default async function TournamentsPage() {
               <div className="px-4 pb-2 font-body text-xs text-mutedcream">Mulai · {tanggal(t.startDate)}</div>
               <div className="flex gap-2 px-4 pb-4">
                 <BrutaLink href={`/tournaments/${t.id}`} variant="sun" className="flex-1 !py-2 !text-xs">Lihat Detail →</BrutaLink>
-                <BrutaLink href={`/organizer/tournaments/${t.id}/manage`} variant="lime" className="flex-1 !py-2 !text-xs">Kelola ⚙</BrutaLink>
+                {session?.role === "ORGANIZER" && (
+                  <BrutaLink href={`/organizer/tournaments/${t.id}/manage`} variant="lime" className="flex-1 !py-2 !text-xs">Kelola ⚙</BrutaLink>
+                )}
               </div>
             </article>
           ))}

@@ -6,9 +6,11 @@ import { gameColor, statusBadge } from "@/lib/data";
 import { rupiah, tanggal } from "@/lib/format";
 import { db } from "@/lib/db";
 import { demoTournamentDetail, withDemo } from "@/lib/demo";
+import { getSession } from "@/lib/session";
 
 export default async function Detail({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
+  const session = await getSession();
   const t = await withDemo(
     () =>
       db.tournament.findUnique({
@@ -69,9 +71,18 @@ export default async function Detail({ params }: { params: Promise<{ id: string 
               ))}
             </div>
             <div className="mt-4 flex gap-2">
-              <BrutaLink href={`/organizer/tournaments/${t.id}/manage`} variant="lime" className="flex-1 !py-2 !text-xs">Kelola Bracket ⚙</BrutaLink>
-              <BrutaLink href={`/organizer/tournaments/${t.id}/sponsorship`} variant="sun" className="flex-1 !py-2 !text-xs">+ Proposal</BrutaLink>
-              <BrutaLink href="/player" variant="cyan" className="flex-1 !py-2 !text-xs">Daftar →</BrutaLink>
+              {session?.role === "ORGANIZER" && (
+                <>
+                  <BrutaLink href={`/organizer/tournaments/${t.id}/manage`} variant="lime" className="flex-1 !py-2 !text-xs">Kelola Bracket ⚙</BrutaLink>
+                  <BrutaLink href={`/organizer/tournaments/${t.id}/sponsorship`} variant="sun" className="flex-1 !py-2 !text-xs">+ Proposal</BrutaLink>
+                </>
+              )}
+              {session?.role === "PLAYER" && (
+                <BrutaLink href="/player" variant="cyan" className="flex-1 !py-2 !text-xs">Daftar →</BrutaLink>
+              )}
+              {!session && (
+                <BrutaLink href="/login?next=/player" variant="cyan" className="flex-1 !py-2 !text-xs">Masuk untuk Daftar →</BrutaLink>
+              )}
             </div>
           </BrutaCard>
 
@@ -90,7 +101,9 @@ export default async function Detail({ params }: { params: Promise<{ id: string 
             </div>
             <div className="mt-4 flex gap-2">
               <BrutaLink href="/sponsors" variant="sun" className="flex-1 !py-2 !text-xs">Directory →</BrutaLink>
-              <BrutaLink href={`/organizer/tournaments/${t.id}/sponsorship`} variant="lime" className="flex-1 !py-2 !text-xs">+ Proposal</BrutaLink>
+              {session?.role === "ORGANIZER" && (
+                <BrutaLink href={`/organizer/tournaments/${t.id}/sponsorship`} variant="lime" className="flex-1 !py-2 !text-xs">+ Proposal</BrutaLink>
+              )}
             </div>
           </BrutaCard>
         </div>

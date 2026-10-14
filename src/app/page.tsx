@@ -50,12 +50,6 @@ function Hero() {
           </h1>
           <div className="mt-6 flex flex-wrap gap-3">
             <BrutaLink href="/tournaments" variant="primary">Lihat Turnamen ↓</BrutaLink>
-            <BrutaLink href="/login?next=/organizer" variant="ghost">Masuk Panitia</BrutaLink>
-          </div>
-          <div className="mt-6 flex flex-wrap gap-2">
-            <BrutaBadge color="#B9A6FF">Auto-Bracket jalan</BrutaBadge>
-            <BrutaBadge color="#8AD9EC">Fee sponsor 10%</BrutaBadge>
-            <BrutaBadge color="#FFB7C5">LFG + Stream UMKM</BrutaBadge>
           </div>
         </div>
         <div className="relative">
@@ -78,12 +72,6 @@ function Hero() {
                 </div>
               ))}
             </div>
-            <p className="mt-3 inline-block rounded-lg border-2 border-black bg-poplime px-2 py-1 font-display text-[11px] font-black">
-              ★ PEMENANG MAJU OTOMATIS
-            </p>
-          </BrutaCard>
-          <BrutaCard className="absolute -bottom-8 -right-2 w-56 rotate-[3deg] bg-poporange p-3 text-black sm:right-4">
-            <p className="font-comic text-2xl leading-none">10% FEE</p>
           </BrutaCard>
           <Sticker className="absolute -top-4 right-6">LIVE!</Sticker>
         </div>
