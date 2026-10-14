@@ -25,18 +25,18 @@ export default async function HelpPage() {
         <h1 className="mt-3 font-display text-3xl font-black">BANTUAN / HELPDESK</h1>
 
         <BrutaCard className="mt-6 p-5">
-          <p className="font-display text-sm font-black">KIRIM TIKET</p>
+          <p className="font-display text-sm font-black">KIRIM PESAN</p>
           <form action={helpTicketAction} className="mt-3 space-y-2">
             <input name="subject" required minLength={4} placeholder="Subjek…" className="w-full rounded-xl border-[3px] border-black bg-white px-3 py-2 font-body text-sm font-medium text-black" />
             <textarea name="message" required minLength={10} rows={3} placeholder="Ceritakan kendala…" className="w-full rounded-xl border-[3px] border-black bg-white px-3 py-2 font-body text-sm font-medium text-black" />
             <button type="submit" className="bruta-press w-full cursor-pointer rounded-xl border-[3px] border-black bg-sun px-5 py-3 font-display text-sm font-bold uppercase text-black shadow-bruta">
-              Kirim Tiket →
+              Kirim Pesan →
             </button>
           </form>
         </BrutaCard>
 
         <BrutaCard className="mt-6 p-5">
-          <p className="font-display text-sm font-black">TIKET TERAKHIR</p>
+          <p className="font-display text-sm font-black">PESAN TERAKHIR</p>
           <div className="mt-3 space-y-2">
             {tickets.map((t) => (
               <div key={t.id} className="rounded-xl border-2 border-black bg-elevated px-3 py-2">

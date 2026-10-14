@@ -58,9 +58,6 @@ export async function Navbar({ active }: { active?: string }) {
               <p className="max-w-[12rem] truncate font-display text-[11px] font-bold uppercase tracking-wide text-cream">
                 {session.name}
               </p>
-              <p className="font-body text-[11px] text-mutedcream">
-                Masuk sebagai {roleLabel[session.role]}
-              </p>
             </div>
             <div className="hidden sm:block">
               <span className="inline-block rounded-xl border-[3px] border-black bg-paperdark px-3 py-2 font-display text-[11px] font-bold uppercase tracking-wide text-cream sm:px-4">

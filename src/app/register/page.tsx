@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { Navbar, Footer } from "@/components/layout/Navbar";
-import { BrutaCard, BrutaBadge } from "@/components/ui/bruta";
+import { BrutaCard } from "@/components/ui/bruta";
 import { HOME_BY_ROLE, getSession, registerAccountAction } from "@/lib/session";
 
 const input =
