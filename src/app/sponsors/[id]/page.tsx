@@ -40,8 +40,8 @@ export default async function ProposalDetail({
       <Navbar />
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-10">
         <div className="flex flex-wrap gap-2">
-          <BrutaBadge color="#FF9E8A">{p.tournament.game}</BrutaBadge>
-          <BrutaBadge color="#F6F2FB">{p.status}</BrutaBadge>
+          <BrutaBadge color="#FF6B1A">{p.tournament.game}</BrutaBadge>
+          <BrutaBadge color="#F8F4E8">{p.status}</BrutaBadge>
         </div>
         <h1 className="mt-3 font-display text-3xl font-black">{p.title.toUpperCase()}</h1>
         <p className="mt-2 font-body text-sm text-mutedcream">

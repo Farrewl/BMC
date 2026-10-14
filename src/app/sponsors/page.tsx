@@ -23,7 +23,7 @@ export default async function SponsorsPage() {
     <div className="flex min-h-full flex-1 flex-col bg-void text-cream">
       <Navbar />
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-10">
-        <BrutaBadge color="#FF9E8A">Sponsor Directory</BrutaBadge>
+        <BrutaBadge color="#FF6B1A">Sponsor Directory</BrutaBadge>
         <h1 className="mt-3 font-display text-3xl font-black">SPONSOR DIRECTORY</h1>
         <div className="mt-6 grid gap-5 sm:grid-cols-2">
           {proposals.map((p) => {
@@ -41,8 +41,8 @@ export default async function SponsorsPage() {
             return (
               <BrutaCard key={p.id} className="p-5">
                 <div className="flex flex-wrap gap-2">
-                  <BrutaBadge color="#FF9E8A">{p.tournament.game}</BrutaBadge>
-                  <BrutaBadge color="#F6F2FB">{p.status}</BrutaBadge>
+                  <BrutaBadge color="#FF6B1A">{p.tournament.game}</BrutaBadge>
+                  <BrutaBadge color="#F8F4E8">{p.status}</BrutaBadge>
                 </div>
                 <p className="mt-3 font-display text-lg font-black">{p.title}</p>
                 <p className="mt-1 font-body text-xs text-mutedcream">
@@ -59,7 +59,7 @@ export default async function SponsorsPage() {
                 </p>
                 <div className="mt-3 flex flex-wrap gap-2">
                   {benefits.slice(0, 3).map((b) => (
-                    <BrutaBadge key={b} color="#B9A6FF">{b}</BrutaBadge>
+                    <BrutaBadge key={b} color="#B5E048">{b}</BrutaBadge>
                   ))}
                 </div>
                 <BrutaLink href="/sponsor" variant="sun" className="mt-4 w-full !py-2 !text-xs">

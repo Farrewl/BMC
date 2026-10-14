@@ -41,9 +41,9 @@ export default async function OrganizerHome() {
 
         <div className="mt-6 grid gap-4 sm:grid-cols-3">
           {[
-            { l: "TURNAMEN", v: String(tournaments.length), c: "#FFB7C5" },
-            { l: "TOTAL TIM", v: String(totalTeams), c: "#8AD9EC" },
-            { l: "TOTAL PRIZE", v: rupiah(totalPrize), c: "#B9A6FF" },
+            { l: "TURNAMEN", v: String(tournaments.length), c: "#FFD02B" },
+            { l: "TOTAL TIM", v: String(totalTeams), c: "#22D3EE" },
+            { l: "TOTAL PRIZE", v: rupiah(totalPrize), c: "#B5E048" },
           ].map((s) => (
             <BrutaCard key={s.l} className="p-4" >
               <p className="font-display text-[11px] font-bold text-mutedcream">

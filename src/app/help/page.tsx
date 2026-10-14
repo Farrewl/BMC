@@ -21,7 +21,7 @@ export default async function HelpPage() {
     <div className="flex min-h-full flex-1 flex-col bg-void text-cream">
       <Navbar />
       <main className="mx-auto w-full max-w-4xl flex-1 px-4 py-10">
-        <BrutaBadge color="#F6F2FB">Bantuan</BrutaBadge>
+        <BrutaBadge color="#F8F4E8">Bantuan</BrutaBadge>
         <h1 className="mt-3 font-display text-3xl font-black">BANTUAN / HELPDESK</h1>
 
         <BrutaCard className="mt-6 p-5">

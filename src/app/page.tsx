@@ -160,7 +160,7 @@ async function TournamentGrid() {
         <h2 className="font-display text-2xl font-black text-cream">
           TURNAMEN <span className="text-sun">AKTIF</span>
         </h2>
-        <BrutaBadge color="#F6F2FB">Turnamen</BrutaBadge>
+        <BrutaBadge color="#F8F4E8">Turnamen</BrutaBadge>
       </div>
       <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {tournaments.map((t) => (

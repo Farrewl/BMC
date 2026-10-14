@@ -8,7 +8,7 @@ export default function NotFound() {
       <Navbar />
       <main className="grid-line-dark flex flex-1 items-center justify-center px-4 py-20">
         <div className="text-center">
-          <BrutaBadge color="#FFB7C5">Error 404</BrutaBadge>
+          <BrutaBadge color="#FFD02B">Error 404</BrutaBadge>
           <h1 className="mt-4 font-display text-5xl font-black sm:text-7xl">
             GAME <span className="text-sun">OVER</span>
           </h1>

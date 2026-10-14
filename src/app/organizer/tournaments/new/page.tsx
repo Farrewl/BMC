@@ -17,7 +17,7 @@ export default async function NewTournamentPage() {
     <div className="flex min-h-full flex-1 flex-col bg-void text-cream">
       <Navbar active="Panitia" />
       <main className="mx-auto w-full max-w-4xl flex-1 px-4 py-10">
-        <BrutaBadge color="#8B6CF6">Panitia · Buat Turnamen</BrutaBadge>
+        <BrutaBadge color="#8B5CF6">Panitia · Buat Turnamen</BrutaBadge>
         <h1 className="mt-3 font-display text-3xl font-black">BUAT TURNAMEN</h1>
 
         <div className="mt-6 grid gap-5 md:grid-cols-2">

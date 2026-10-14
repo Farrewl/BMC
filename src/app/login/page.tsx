@@ -9,8 +9,8 @@ const input =
 
 const accountColor: Record<string, string> = {
   ORGANIZER: "#A98BFB",
-  SPONSOR: "#FF9E8A",
-  PLAYER: "#8AD9EC",
+  SPONSOR: "#FF6B1A",
+  PLAYER: "#22D3EE",
 };
 
 export default async function LoginPage({
@@ -33,7 +33,7 @@ export default async function LoginPage({
         <section className="halftone-dark grid-line-dark">
           <div className="mx-auto grid max-w-5xl gap-8 px-4 py-12 md:grid-cols-2 md:items-start">
             <div>
-              <BrutaBadge color="#FF6FA5">Masuk</BrutaBadge>
+              <BrutaBadge color="#FF4D8D">Masuk</BrutaBadge>
               <h1 className="mt-4 font-display text-3xl font-black leading-tight sm:text-4xl">
                 MASUK KE <span className="text-sun">AKUN</span> KAMU
               </h1>

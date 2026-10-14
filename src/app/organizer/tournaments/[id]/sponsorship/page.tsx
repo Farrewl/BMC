@@ -42,7 +42,7 @@ export default async function SponsorshipPage({
     <div className="flex min-h-full flex-1 flex-col bg-void text-cream">
       <Navbar active="Panitia" />
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-10">
-        <BrutaBadge color="#FF9E8A">Panitia · Proposal Sponsor</BrutaBadge>
+        <BrutaBadge color="#FF6B1A">Panitia · Proposal Sponsor</BrutaBadge>
         <h1 className="mt-3 font-display text-3xl font-black">{t.title.toUpperCase()}</h1>
 
         <div className="mt-6 grid gap-5 lg:grid-cols-2">

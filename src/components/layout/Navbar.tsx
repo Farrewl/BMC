@@ -52,7 +52,7 @@ export async function Navbar({ active }: { active?: string }) {
     <header className="no-print sticky top-0 z-40 border-b-4 border-black bg-card/95 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3">
         <Link href="/" className="flex items-center gap-3">
-          <span className="h-10 w-10 overflow-hidden rounded-lg border-[3px] border-black bg-arena shadow-bruta-sm">
+          <span className="h-10 w-10 overflow-hidden rounded-lg border-[3px] border-black bg-black shadow-bruta-sm">
             <Image
               src="/icon.png"
               alt="Logo Nge-Sport"
@@ -122,7 +122,7 @@ export function Footer() {
       <div className="mx-auto grid max-w-6xl gap-6 px-4 py-8 sm:grid-cols-2 lg:grid-cols-3">
         <div>
           <div className="flex items-center gap-3">
-            <span className="h-9 w-9 overflow-hidden rounded-lg border-[3px] border-black bg-arena">
+            <span className="h-9 w-9 overflow-hidden rounded-lg border-[3px] border-black bg-black">
               <Image
                 src="/icon.png"
                 alt="Logo Nge-Sport"

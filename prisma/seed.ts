@@ -219,7 +219,7 @@ async function main() {
           sponsorId: sponsors[0].id,
           brandName: "Kopi Kos Ndalem",
           bannerText: "Ngopi dulu sebelum push rank! Diskon 15% bawa KTM.",
-          bannerColor: "#FFB7C5",
+          bannerColor: "#FFD02B",
         },
       });
     }
