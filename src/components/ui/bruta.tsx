@@ -52,7 +52,7 @@ export function BrutaCard({
 }
 
 export function BrutaBadge({
-  color = "#FFD02B",
+  color = "#FFB7C5",
   className,
   children,
 }: {

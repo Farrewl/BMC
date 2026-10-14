@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { DemoBanner } from "@/components/layout/DemoBanner";
 import { Navbar, Footer } from "@/components/layout/Navbar";
 import { BrutaCard, BrutaBadge } from "@/components/ui/bruta";
 import { db } from "@/lib/db";
@@ -46,11 +45,10 @@ export default async function ManagePage({
 
   return (
     <div className="flex min-h-full flex-1 flex-col bg-void text-cream">
-      <DemoBanner />
       <Navbar active="Panitia" />
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-10">
         <div className="flex flex-wrap items-center gap-2">
-          <BrutaBadge color="#8B5CF6">Kelola · Panitia</BrutaBadge>
+          <BrutaBadge color="#8B6CF6">Kelola · Panitia</BrutaBadge>
           <BrutaBadge color={statusBadge(t.status)}>{t.status}</BrutaBadge>
           <BrutaBadge color={gameColor(t.game)}>{t.game}</BrutaBadge>
         </div>
@@ -83,7 +81,7 @@ export default async function ManagePage({
                     #{i + 1} {r.teamName}
                   </span>
                   <BrutaBadge
-                    color={r.paymentStatus === "PAID" ? "#22C55E" : "#F59E0B"}
+                    color={r.paymentStatus === "PAID" ? "#4ADE80" : "#FBBF24"}
                   >
                     {r.paymentStatus}
                   </BrutaBadge>
@@ -106,15 +104,9 @@ export default async function ManagePage({
                 type="submit"
                 className="mt-4 cursor-pointer rounded-xl border-[3px] border-black bg-elevated px-4 py-2 font-display text-xs font-bold text-cream"
               >
-                ↺ Reset bracket (hapus semua match)
+                ↺ Reset bracket
               </button>
             </form>
-          )}
-          {!hasBracket && (
-            <p className="mt-2 font-body text-xs text-mutedcream">
-              n={t.registrations.length} → size pangkat-2 terdekat, seed atas
-              dapat BYE otomatis. Contoh 6 tim → 8 slot, 2 BYE.
-            </p>
           )}
         </BrutaCard>
 

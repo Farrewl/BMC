@@ -64,7 +64,7 @@ export default async function Detail({ params }: { params: Promise<{ id: string 
               {t.registrations.map((r, i) => (
                 <div key={r.id} className="flex items-center justify-between rounded-xl border-2 border-black bg-elevated px-3 py-2">
                   <span className="font-body text-sm font-bold">#{i + 1} {r.teamName}</span>
-                  <BrutaBadge color={r.paymentStatus === "PAID" ? "#22C55E" : "#F59E0B"}>{r.paymentStatus}</BrutaBadge>
+                  <BrutaBadge color={r.paymentStatus === "PAID" ? "#4ADE80" : "#FBBF24"}>{r.paymentStatus}</BrutaBadge>
                 </div>
               ))}
             </div>

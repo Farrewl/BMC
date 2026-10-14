@@ -1,10 +1,8 @@
 import { notFound } from "next/navigation";
-import { DemoBanner } from "@/components/layout/DemoBanner";
 import { Navbar, Footer } from "@/components/layout/Navbar";
 import { BrutaCard, BrutaBadge } from "@/components/ui/bruta";
 import { db } from "@/lib/db";
 import { demoTournamentDetail, withDemo } from "@/lib/demo";
-import { rupiah } from "@/lib/format";
 import { createProposalAction } from "@/lib/actions";
 import { buildProposal } from "@/lib/proposal";
 import { requireRole } from "@/lib/session";
@@ -42,14 +40,10 @@ export default async function SponsorshipPage({
 
   return (
     <div className="flex min-h-full flex-1 flex-col bg-void text-cream">
-      <DemoBanner />
       <Navbar active="Panitia" />
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-10">
-        <BrutaBadge color="#FF6B1A">Panitia · Proposal Sponsor</BrutaBadge>
+        <BrutaBadge color="#FF9E8A">Panitia · Proposal Sponsor</BrutaBadge>
         <h1 className="mt-3 font-display text-3xl font-black">{t.title.toUpperCase()}</h1>
-        <p className="mt-2 font-body text-sm text-mutedcream">
-          Isi target dana → preview template → simpan ke Sponsor Directory. Tanpa AI, template string + print.
-        </p>
 
         <div className="mt-6 grid gap-5 lg:grid-cols-2">
           <BrutaCard className="p-5">
@@ -78,9 +72,6 @@ export default async function SponsorshipPage({
                 Simpan ke Directory →
               </button>
             </form>
-            <p className="mt-3 font-body text-xs text-mutedcream">
-              Sudah ada {t.proposals.length} proposal. Fee deal 10%: Rp 1jt → panitia {rupiah(900_000)}.
-            </p>
           </BrutaCard>
 
           <BrutaCard className="p-5">

@@ -31,8 +31,6 @@ ${p.benefits.map((b) => `- ${b}`).join("\n")}
 - Eksposur: logo jersey, shoutout MC, banner stream selama acara.
 
 ## 5. Penutup & Kontak
-Hubungi panitia: ${p.contact}. Dana difasilitasi LombaEsport (fee platform 10%, transparan di kwitansi).
-
-_Mode demo — angka di atas simulasi, bukan penawaran resmi._
+Hubungi panitia: ${p.contact}. Dana difasilitasi Nge-Sport (fee platform 10%, transparan di kwitansi).
 `;
 }

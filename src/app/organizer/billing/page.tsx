@@ -1,4 +1,3 @@
-import { DemoBanner } from "@/components/layout/DemoBanner";
 import { Navbar, Footer } from "@/components/layout/Navbar";
 import { BrutaCard, BrutaBadge, BrutaLink } from "@/components/ui/bruta";
 import { db } from "@/lib/db";
@@ -29,15 +28,10 @@ export default async function BillingPage() {
 
   return (
     <div className="flex min-h-full flex-1 flex-col bg-void text-cream">
-      <DemoBanner />
       <Navbar active="Panitia" />
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-10">
-        <BrutaBadge color="#FFD02B">Panitia · Billing</BrutaBadge>
+        <BrutaBadge color="#FFB7C5">Panitia · Billing</BrutaBadge>
         <h1 className="mt-3 font-display text-3xl font-black">BILLING</h1>
-        <p className="mt-2 max-w-2xl font-body text-sm text-mutedcream">
-          Tiga sumber pendapatan LombaEsport: SaaS fee per event, success fee 10% sponsor, convenience fee solo player.
-          {loyal ? " Badge Organizer Langganan aktif: diskon 10% SaaS fee." : " Capai 3 event untuk badge langganan diskon 10%."}
-        </p>
 
         <div className="mt-6 grid gap-4 sm:grid-cols-3">
           <BrutaCard className="p-4">
@@ -57,7 +51,7 @@ export default async function BillingPage() {
         <BrutaCard className="mt-6 p-5">
           <div className="flex items-center justify-between">
             <p className="font-display text-sm font-black">RINCIAN SAAS PER EVENT</p>
-            {loyal && <BrutaBadge color="#B5E048">Langganan -10%</BrutaBadge>}
+            {loyal && <BrutaBadge color="#B9A6FF">Langganan -10%</BrutaBadge>}
           </div>
           <div className="mt-3 space-y-2">
             {saasRows.map(({ t, fee }) => (

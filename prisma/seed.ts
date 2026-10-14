@@ -42,7 +42,7 @@ async function main() {
   const players = await Promise.all(
     playerNames.map((n, i) =>
       db.user.create({
-        data: { name: `${n} Pratama`, email: `player${i + 1}@lombaesport.id`, role: "PLAYER", city: "Semarang" },
+        data: { name: `${n} Pratama`, email: `player${i + 1}@ngesport.id`, role: "PLAYER", city: "Semarang" },
       })
     )
   );
@@ -219,7 +219,7 @@ async function main() {
           sponsorId: sponsors[0].id,
           brandName: "Kopi Kos Ndalem",
           bannerText: "Ngopi dulu sebelum push rank! Diskon 15% bawa KTM.",
-          bannerColor: "#FFD02B",
+          bannerColor: "#FFB7C5",
         },
       });
     }

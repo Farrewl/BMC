@@ -16,9 +16,9 @@ export const GAMES = [
 ] as const;
 
 export const GAME_COLORS: Record<string, string> = {
-  "Mobile Legends": "#8B5CF6",
-  Valorant: "#EF4444",
-  "Free Fire": "#FF6B1A",
-  "PUBG Mobile": "#FFD02B",
-  "EA FC": "#22C55E",
+  "Mobile Legends": "#8B6CF6",
+  Valorant: "#FF6B81",
+  "Free Fire": "#FF9E8A",
+  "PUBG Mobile": "#8AD9EC",
+  "EA FC": "#B9A6FF",
 };

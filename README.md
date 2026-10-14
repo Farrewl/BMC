@@ -1,4 +1,4 @@
-# LombaEsport — Platform Turnamen E-Sports + Sponsor Matchmaking
+# Nge-Sport — Platform Turnamen E-Sports + Sponsor Matchmaking
 
 Mock-up fungsional BMC Kelompok 14 (Ide 2). Style Neobrutalism gelap + Retro Pop, font Lexend Mega.
 
@@ -14,13 +14,13 @@ npm run dev        # buka http://localhost:3000
 
 Tanpa login kamu cuma bisa lihat halaman publik: **Beranda**, **Daftar Turnamen**, dan **Detail Turnamen**.
 
-Untuk memakai fitur, masuk lewat `/login`. Ada tiga akun demo (klik "Masuk cepat sebagai"):
+Untuk memakai fitur, masuk lewat `/login`. Ada tiga akun contoh (klik "PILIH AKUN"):
 
 | Role | Email | Password |
 |---|---|---|
 | Panitia (ORGANIZER) | `bem@undip.ac.id` | apa saja (mock) |
 | Sponsor (SPONSOR) | `kopi@ndalem.id` | apa saja (mock) |
-| Player (PLAYER) | `player1@lombaesport.id` | apa saja (mock) |
+| Player (PLAYER) | `player1@ngesport.id` | apa saja (mock) |
 
 Login tanpa password sungguhan — cukup email, cookie sesi 7 hari. Bisa ganti role cepat dari Navbar, dan logout lewat tombol **Keluar**.
 
@@ -40,8 +40,8 @@ Halaman yang butuh login:
 
 ## Yang di-mock
 
-- Auth: login mock (email saja, tanpa password sungguhan), sesi cookie `lombaesport_session`. Akun demo otomatis jalan walau DB kosong (fallback Vercel).
-- Bayar: `mockPay` 1,2 dtk selalu sukses, ref `MOCK-XXXXXX`. Tulisan Mode Demo di halaman fitur.
+- Auth: login mock (email saja, tanpa password sungguhan), sesi cookie `ngesport_session`. Akun contoh otomatis jalan walau DB kosong (fallback Vercel).
+- Bayar: `mockPay` 1,2 dtk selalu sukses, ref `MOCK-XXXXXX`.
 - Proposal: template string tanpa AI. Stream: iframe YouTube + banner statis.
 - Format: single elimination saja. Tarif SaaS/loyalty asumsi kelompok, success fee 10% dari BMC.
 

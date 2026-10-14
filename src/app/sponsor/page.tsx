@@ -1,4 +1,3 @@
-import { DemoBanner } from "@/components/layout/DemoBanner";
 import { Navbar, Footer } from "@/components/layout/Navbar";
 import { BrutaCard, BrutaBadge, BrutaLink } from "@/components/ui/bruta";
 import { db } from "@/lib/db";
@@ -48,18 +47,13 @@ export default async function SponsorHome() {
   const totalPaid = deals
     .filter((d) => d.status === "PAID")
     .reduce((s, d) => s + d.amount, 0);
-  const { platformFee } = calcSponsorDeal(totalPaid || 1_000_000);
 
   return (
     <div className="flex min-h-full flex-1 flex-col bg-void text-cream">
-      <DemoBanner />
       <Navbar active="Sponsor" />
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-10">
-        <BrutaBadge color="#FF6B1A">Sponsor · UMKM</BrutaBadge>
+        <BrutaBadge color="#FF9E8A">Sponsor · UMKM</BrutaBadge>
         <h1 className="mt-3 font-display text-3xl font-black">DASHBOARD SPONSOR</h1>
-        <p className="mt-2 max-w-2xl font-body text-sm text-mutedcream">
-          Danai proposal, pantau fee 10% transparan, dan booking slot iklan stream. Contoh: Rp 1jt → fee Rp 100rb, panitia Rp 900rb.
-        </p>
 
         <div className="mt-6 grid gap-4 sm:grid-cols-3">
           <BrutaCard className="p-4">
@@ -106,21 +100,17 @@ export default async function SponsorHome() {
                     <p className="font-body text-sm font-bold">{d.sponsor.name}</p>
                     <p className="font-body text-xs text-mutedcream">{d.proposal.title}</p>
                   </div>
-                  <BrutaBadge color={d.status === "PAID" ? "#22C55E" : "#F59E0B"}>
+                  <BrutaBadge color={d.status === "PAID" ? "#4ADE80" : "#FBBF24"}>
                     {rupiah(d.amount)}
                   </BrutaBadge>
                 </div>
               ))}
             </div>
-            <p className="mt-3 font-body text-xs text-mutedcream">
-              Fee contoh Rp 1jt → Rp {platformFee.toLocaleString("id-ID")}. Semua deal tercatat di kwitansi.
-            </p>
           </BrutaCard>
         </div>
 
         <BrutaCard className="mt-6 p-5">
           <p className="font-display text-sm font-black">BOOKING SLOT IKLAN STREAM UMKM</p>
-          <p className="mt-1 font-body text-xs text-mutedcream">Banner langsung muncul di halaman turnamen. Contoh brand kos: Kopi Kos Ndalem.</p>
           <form action={bookAdAction} className="mt-3 grid gap-2 sm:grid-cols-4">
             <select name="slotId" className="rounded-lg border-2 border-black bg-white px-2 py-2 font-body text-xs font-bold text-black" defaultValue="">
               <option value="" disabled>Pilih slot…</option>

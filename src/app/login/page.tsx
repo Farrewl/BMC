@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { DemoBanner } from "@/components/layout/DemoBanner";
 import { Navbar, Footer } from "@/components/layout/Navbar";
 import { BrutaCard, BrutaBadge, BrutaLink } from "@/components/ui/bruta";
 import { DEMO_ACCOUNTS, HOME_BY_ROLE, getSession, loginAction } from "@/lib/session";
@@ -9,15 +8,9 @@ const input =
   "w-full rounded-xl border-[3px] border-black bg-white px-3 py-2 font-body text-sm font-medium text-black";
 
 const accountColor: Record<string, string> = {
-  ORGANIZER: "#8B5CF6",
-  SPONSOR: "#FF6B1A",
-  PLAYER: "#22D3EE",
-};
-
-const accountDesc: Record<string, string> = {
-  ORGANIZER: "Buat turnamen, kelola bracket, ajukan proposal sponsor.",
-  SPONSOR: "Telusuri proposal, danai acara, beli slot iklan UMKM.",
-  PLAYER: "Daftar turnamen, cari tim lewat LFG, tonton stream.",
+  ORGANIZER: "#A98BFB",
+  SPONSOR: "#FF9E8A",
+  PLAYER: "#8AD9EC",
 };
 
 export default async function LoginPage({
@@ -35,25 +28,19 @@ export default async function LoginPage({
 
   return (
     <div className="flex min-h-full flex-1 flex-col bg-void text-cream">
-      <DemoBanner />
       <Navbar />
       <main className="flex-1">
         <section className="halftone-dark grid-line-dark">
           <div className="mx-auto grid max-w-5xl gap-8 px-4 py-12 md:grid-cols-2 md:items-start">
             <div>
-              <BrutaBadge color="#FF4D8D">Masuk / Login</BrutaBadge>
+              <BrutaBadge color="#FF6FA5">Masuk</BrutaBadge>
               <h1 className="mt-4 font-display text-3xl font-black leading-tight sm:text-4xl">
                 MASUK KE <span className="text-sun">AKUN</span> KAMU
               </h1>
-              <p className="mt-3 font-body text-sm text-mutedcream">
-                Halaman publik bisa dilihat tanpa akun. Untuk memakai fitur
-                (kelola turnamen, danai acara, cari tim), masuk dulu pakai salah
-                satu akun demo di samping.
-              </p>
 
               {error ? (
                 <p className="mt-4 rounded-xl border-[3px] border-black bg-lose px-3 py-2 font-body text-sm font-bold text-white shadow-bruta-sm">
-                  Akun tidak ditemukan. Pakai salah satu akun demo di samping.
+                  Akun tidak ditemukan.
                 </p>
               ) : null}
 
@@ -85,21 +72,19 @@ export default async function LoginPage({
                   >
                     Masuk →
                   </button>
-                  <p className="font-body text-xs text-mutedcream">
-                    Mode demo — password apa saja diterima, tidak ada autentikasi
-                    sungguhan.
-                  </p>
                 </form>
               </BrutaCard>
+
+              <p className="mt-5 font-body text-sm text-mutedcream">
+                Belum punya akun?{" "}
+                <Link href="/login" className="font-bold text-sun underline">
+                  Hubungi panitia
+                </Link>
+              </p>
             </div>
 
             <div>
-              <h2 className="font-display text-lg font-black">
-                MASUK CEPAT <span className="text-popcyan">SEBAGAI</span>
-              </h2>
-              <p className="mt-1 font-body text-xs text-mutedcream">
-                Satu klik, langsung masuk pakai akun contoh tiap role.
-              </p>
+              <h2 className="font-display text-lg font-black">PILIH AKUN</h2>
               <div className="mt-4 space-y-4">
                 {DEMO_ACCOUNTS.map((a) => (
                   <form key={a.role} action={loginAction}>
@@ -119,21 +104,12 @@ export default async function LoginPage({
                         {a.name}
                       </p>
                       <p className="font-body text-xs text-mutedcream">{a.email}</p>
-                      <p className="mt-2 font-body text-xs text-mutedcream">
-                        {accountDesc[a.role]}
-                      </p>
                     </button>
                   </form>
                 ))}
               </div>
 
-              <p className="mt-6 font-body text-xs text-mutedcream">
-                Cuma mau lihat-lihat?{" "}
-                <Link href="/" className="font-bold text-sun underline">
-                  Balik ke beranda
-                </Link>
-              </p>
-              <div className="mt-4">
+              <div className="mt-6">
                 <BrutaLink href="/tournaments" variant="ghost" className="!px-3 !py-2 !text-xs">
                   Lihat Turnamen dulu
                 </BrutaLink>

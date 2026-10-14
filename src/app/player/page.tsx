@@ -1,4 +1,3 @@
-import { DemoBanner } from "@/components/layout/DemoBanner";
 import { Navbar, Footer } from "@/components/layout/Navbar";
 import { BrutaCard, BrutaBadge, BrutaLink } from "@/components/ui/bruta";
 import { db } from "@/lib/db";
@@ -27,14 +26,10 @@ export default async function PlayerHome() {
 
   return (
     <div className="flex min-h-full flex-1 flex-col bg-void text-cream">
-      <DemoBanner />
       <Navbar active="Player" />
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-10">
-        <BrutaBadge color="#22D3EE">Player · Gamer</BrutaBadge>
+        <BrutaBadge color="#8AD9EC">Player · Gamer</BrutaBadge>
         <h1 className="mt-3 font-display text-3xl font-black">DASHBOARD PLAYER</h1>
-        <p className="mt-2 font-body text-sm text-mutedcream">
-          Daftar turnamen yang masih buka, simulasi checkout tiket, atau cari tim di LFG.
-        </p>
 
         <div className="mt-6 grid gap-4 sm:grid-cols-2">
           <BrutaCard className="p-4">

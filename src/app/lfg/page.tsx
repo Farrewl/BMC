@@ -1,4 +1,3 @@
-import { DemoBanner } from "@/components/layout/DemoBanner";
 import { Navbar, Footer } from "@/components/layout/Navbar";
 import { BrutaCard, BrutaBadge, BrutaLink } from "@/components/ui/bruta";
 import { db } from "@/lib/db";
@@ -7,7 +6,7 @@ import { gameColor } from "@/lib/data";
 import { lfgInviteAction } from "@/lib/actions";
 import { requireSession } from "@/lib/session";
 
-const AVATAR_BG = ["#8B5CF6", "#EF4444", "#FF6B1A", "#FFD02B", "#22C55E", "#22D3EE", "#FF4D8D"];
+const AVATAR_BG = ["#8B6CF6", "#FF6B81", "#FF9E8A", "#FFB7C5", "#4ADE80", "#8AD9EC", "#FF6FA5"];
 
 function initials(name: string) {
   return name.split(" ").map((w) => w[0]).slice(0, 2).join("").toUpperCase();
@@ -27,14 +26,10 @@ export default async function LfgPage() {
 
   return (
     <div className="flex min-h-full flex-1 flex-col bg-void text-cream">
-      <DemoBanner />
       <Navbar />
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-10">
-        <BrutaBadge color="#22D3EE">Papan LFG</BrutaBadge>
+        <BrutaBadge color="#8AD9EC">Papan LFG</BrutaBadge>
         <h1 className="mt-3 font-display text-3xl font-black">PAPAN LFG</h1>
-        <p className="mt-2 max-w-2xl font-body text-sm text-mutedcream">
-          Solo player cari tim: game, role, rank, gaya main. Klik Ajak Gabung untuk buka dashboard player.
-        </p>
         <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {posts.map((p, i) => (
             <BrutaCard key={p.id} className="p-5">
@@ -52,7 +47,7 @@ export default async function LfgPage() {
               </div>
               <div className="mt-3 flex flex-wrap gap-2">
                 <BrutaBadge color={gameColor(p.game)}>{p.role}</BrutaBadge>
-                <BrutaBadge color="#F8F4E8">{p.playStyle}</BrutaBadge>
+                <BrutaBadge color="#F6F2FB">{p.playStyle}</BrutaBadge>
               </div>
               <p className="mt-3 font-body text-sm text-cream">{p.bio}</p>
               <p className="mt-1 font-body text-xs text-mutedcream">

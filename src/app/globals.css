@@ -1,30 +1,30 @@
 @import "tailwindcss";
 
 @theme {
-  --color-void: #12111a;
-  --color-card: #1a1926;
-  --color-elevated: #232233;
-  --color-paperdark: #1e1d2b;
-  --color-cream: #f8f4e8;
-  --color-mutedcream: #b8b3a3;
-  --color-arena: #8b5cf6;
-  --color-sun: #ffd02b;
-  --color-poporange: #ff6b1a;
-  --color-popcyan: #22d3ee;
-  --color-poppink: #ff4d8d;
-  --color-poplime: #b5e048;
-  --color-win: #22c55e;
-  --color-pending: #f59e0b;
-  --color-lose: #ef4444;
+  --color-void: #0a0910;
+  --color-card: #16131f;
+  --color-elevated: #201b2c;
+  --color-paperdark: #1a1626;
+  --color-cream: #f6f2fb;
+  --color-mutedcream: #b7afc7;
+  --color-arena: #8b6cf6;
+  --color-sun: #ffb7c5;
+  --color-poporange: #ff9e8a;
+  --color-popcyan: #8ad9ec;
+  --color-poppink: #ff6fa5;
+  --color-poplime: #b9a6ff;
+  --color-win: #4ade80;
+  --color-pending: #fbbf24;
+  --color-lose: #ff6b81;
   --color-byegray: #6b7280;
-  --color-livered: #ff2e2e;
+  --color-livered: #ff4d6d;
 
   --shadow-bruta-sm: 2px 2px 0 0 #000;
   --shadow-bruta: 4px 4px 0 0 #000;
   --shadow-bruta-lg: 6px 6px 0 0 #000;
-  --shadow-bruta-pop: 4px 4px 0 0 #8b5cf6;
-  --shadow-bruta-sun: 4px 4px 0 0 #ffd02b;
-  --shadow-bruta-cyan: 4px 4px 0 0 #22d3ee;
+  --shadow-bruta-pop: 4px 4px 0 0 #8b6cf6;
+  --shadow-bruta-sun: 4px 4px 0 0 #ffb7c5;
+  --shadow-bruta-cyan: 4px 4px 0 0 #8ad9ec;
 
   --font-display: "Lexend Mega", system-ui, sans-serif;
   --font-body: "Space Grotesk", system-ui, sans-serif;
@@ -68,15 +68,15 @@ body {
 .bye-stripes {
   background: repeating-linear-gradient(
     45deg,
-    #2a2a3a 0 8px,
-    #232233 8px 16px
+    #2a2440 0 8px,
+    #201b2c 8px 16px
   );
 }
 
 .progress-stripes {
   background: repeating-linear-gradient(
     -45deg,
-    #ff6b1a 0 10px,
+    #ff6fa5 0 10px,
     #111111 10px 14px
   );
 }

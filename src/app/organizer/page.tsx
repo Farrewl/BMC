@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { DemoBanner } from "@/components/layout/DemoBanner";
 import { Navbar, Footer } from "@/components/layout/Navbar";
 import { BrutaCard, BrutaBadge, BrutaLink } from "@/components/ui/bruta";
 import { db } from "@/lib/db";
@@ -25,16 +24,12 @@ export default async function OrganizerHome() {
 
   return (
     <div className="flex min-h-full flex-1 flex-col bg-void text-cream">
-      <DemoBanner />
       <Navbar active="Panitia" />
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-10">
-        <BrutaBadge color="#8B5CF6">Organizer · Panitia</BrutaBadge>
+        <BrutaBadge color="#A98BFB">Organizer · Panitia</BrutaBadge>
         <h1 className="mt-3 font-display text-3xl font-black">
           DASHBOARD PANITIA
         </h1>
-        <p className="mt-2 font-body text-sm text-mutedcream">
-          Kelola turnamen, generate bracket, dan input skor.
-        </p>
         <div className="mt-4 flex flex-wrap gap-2">
           <BrutaLink href="/organizer/tournaments/new" variant="sun" className="!py-2 !text-xs">
             + Buat Turnamen
@@ -46,9 +41,9 @@ export default async function OrganizerHome() {
 
         <div className="mt-6 grid gap-4 sm:grid-cols-3">
           {[
-            { l: "TURNAMEN", v: String(tournaments.length), c: "#FFD02B" },
-            { l: "TOTAL TIM", v: String(totalTeams), c: "#22D3EE" },
-            { l: "TOTAL PRIZE", v: rupiah(totalPrize), c: "#B5E048" },
+            { l: "TURNAMEN", v: String(tournaments.length), c: "#FFB7C5" },
+            { l: "TOTAL TIM", v: String(totalTeams), c: "#8AD9EC" },
+            { l: "TOTAL PRIZE", v: rupiah(totalPrize), c: "#B9A6FF" },
           ].map((s) => (
             <BrutaCard key={s.l} className="p-4" >
               <p className="font-display text-[11px] font-bold text-mutedcream">

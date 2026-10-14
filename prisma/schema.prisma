@@ -200,7 +200,7 @@ model AdBooking {
   sponsor     User   @relation(fields: [sponsorId], references: [id])
   brandName   String
   bannerText  String
-  bannerColor String @default("#f59e0b")
+  bannerColor String @default("#FBBF24")
 }
 
 model HelpTicket {

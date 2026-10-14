@@ -18,7 +18,7 @@ export default async function TournamentsPage() {
     <div className="flex min-h-full flex-1 flex-col bg-void text-cream">
       <Navbar />
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-10">
-        <BrutaBadge color="#FFD02B">Daftar Turnamen</BrutaBadge>
+        <BrutaBadge color="#FFB7C5">Daftar Turnamen</BrutaBadge>
         <h1 className="mt-3 font-display text-3xl font-black">DAFTAR TURNAMEN</h1>
         <div className="mt-6 grid gap-5 sm:grid-cols-2">
           {tournaments.map((t) => (

@@ -248,7 +248,7 @@ export async function bookAdAction(formData: FormData) {
       sponsorId: sponsor.id,
       brandName: parsed.data.brandName,
       bannerText: parsed.data.bannerText,
-      bannerColor: "#FFD02B",
+      bannerColor: "#FFB7C5",
     },
   });
 

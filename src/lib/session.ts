@@ -5,7 +5,7 @@ import { db } from "@/lib/db";
 export type Role = "ORGANIZER" | "SPONSOR" | "PLAYER";
 export type Session = { userId: string; role: Role; name: string };
 
-const COOKIE = "lombaesport_session";
+const COOKIE = "ngesport_session";
 
 export const HOME_BY_ROLE: Record<Role, string> = {
   ORGANIZER: "/organizer",
@@ -22,7 +22,7 @@ export const DEMO_ACCOUNTS: Array<{
 }> = [
   { role: "ORGANIZER", label: "Panitia", name: "BEM FSM Undip", email: "bem@undip.ac.id" },
   { role: "SPONSOR", label: "Sponsor", name: "Kopi Kos Ndalem", email: "kopi@ndalem.id" },
-  { role: "PLAYER", label: "Player", name: "Bagas Pratama", email: "player1@lombaesport.id" },
+  { role: "PLAYER", label: "Player", name: "Bagas Pratama", email: "player1@ngesport.id" },
 ];
 
 function demoByEmail(email: string) {

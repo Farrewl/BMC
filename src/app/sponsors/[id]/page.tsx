@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import { DemoBanner } from "@/components/layout/DemoBanner";
 import { Navbar, Footer } from "@/components/layout/Navbar";
 import { BrutaCard, BrutaBadge, BrutaLink } from "@/components/ui/bruta";
 import { db } from "@/lib/db";
@@ -38,12 +37,11 @@ export default async function ProposalDetail({
 
   return (
     <div className="flex min-h-full flex-1 flex-col bg-void text-cream">
-      <DemoBanner />
       <Navbar />
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-10">
         <div className="flex flex-wrap gap-2">
-          <BrutaBadge color="#FF6B1A">{p.tournament.game}</BrutaBadge>
-          <BrutaBadge color="#F8F4E8">{p.status}</BrutaBadge>
+          <BrutaBadge color="#FF9E8A">{p.tournament.game}</BrutaBadge>
+          <BrutaBadge color="#F6F2FB">{p.status}</BrutaBadge>
         </div>
         <h1 className="mt-3 font-display text-3xl font-black">{p.title.toUpperCase()}</h1>
         <p className="mt-2 font-body text-sm text-mutedcream">
@@ -76,10 +74,9 @@ export default async function ProposalDetail({
                 <input type="hidden" name="proposalId" value={p.id} />
                 <input name="amount" type="number" min={50000} defaultValue={1000000} required className={input} />
                 <button type="submit" className="bruta-press w-full cursor-pointer rounded-xl border-[3px] border-black bg-poporange px-5 py-3 font-display text-sm font-bold uppercase text-black shadow-bruta">
-                  Danai (Mock Bayar) →
+                  Danai Acara →
                 </button>
               </form>
-              <p className="mt-2 font-body text-xs">Mock bayar 1,2 dtk, langsung PAID, ref MOCK-XXXXXX.</p>
               <div className="mt-3 space-y-2">
                 {p.deals.slice(0, 3).map((d) => (
                   <div key={d.id} className="flex justify-between rounded-lg border-2 border-black bg-white px-2 py-1 font-body text-xs font-bold">

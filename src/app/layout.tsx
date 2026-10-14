@@ -1,13 +1,14 @@
+/* eslint-disable @next/next/no-page-custom-font */
 import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "LombaEsport",
+  title: "Nge-Sport — Platform Turnamen E-Sports",
   description:
-    "LombaEsport: Auto-Bracket, Sponsor Directory, LFG, Stream + slot iklan UMKM. Style Neobrutalism gelap + Retro Pop, font Lexend Mega.",
+    "Kelola turnamen e-sports kampus: bracket otomatis, matchmaking sponsor UMKM, LFG, dan live stream dalam satu platform.",
   icons: {
-    icon: "/icon.jpeg",
-    apple: "/icon.jpeg",
+    icon: "/icon.png",
+    apple: "/icon.png",
   },
 };
 

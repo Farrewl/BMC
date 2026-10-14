@@ -41,7 +41,6 @@ function Hero() {
       />
       <div className="mx-auto grid max-w-6xl gap-8 px-4 py-14 md:grid-cols-2 md:items-center">
         <div>
-          <BrutaBadge color="#FF4D8D">BMC Kelompok 14 · Ide 2</BrutaBadge>
           <h1 className="mt-4 font-display text-4xl font-black leading-[1.05] text-cream sm:text-5xl">
             KELOLA{" "}
             <span className="inline-block -rotate-1 border-[3px] border-black bg-sun px-2 text-black shadow-bruta-sm">
@@ -49,19 +48,14 @@ function Hero() {
             </span>{" "}
             TANPA DRAMA BRACKET.
           </h1>
-          <p className="mt-4 max-w-md font-body text-base text-mutedcream">
-            LombaEsport mengotomatisasi bracket, mempertemukan panitia dengan sponsor
-            UMKM, dan membantu solo player cari tim. Mock-up fungsional — bukan
-            produk pembayaran sungguhan.
-          </p>
           <div className="mt-6 flex flex-wrap gap-3">
             <BrutaLink href="/tournaments" variant="primary">Lihat Turnamen ↓</BrutaLink>
             <BrutaLink href="/login?next=/organizer" variant="ghost">Masuk Panitia</BrutaLink>
           </div>
           <div className="mt-6 flex flex-wrap gap-2">
-            <BrutaBadge color="#B5E048">Auto-Bracket jalan</BrutaBadge>
-            <BrutaBadge color="#22D3EE">Fee sponsor 10%</BrutaBadge>
-            <BrutaBadge color="#FFD02B">LFG + Stream UMKM</BrutaBadge>
+            <BrutaBadge color="#B9A6FF">Auto-Bracket jalan</BrutaBadge>
+            <BrutaBadge color="#8AD9EC">Fee sponsor 10%</BrutaBadge>
+            <BrutaBadge color="#FFB7C5">LFG + Stream UMKM</BrutaBadge>
           </div>
         </div>
         <div className="relative">
@@ -89,10 +83,7 @@ function Hero() {
             </p>
           </BrutaCard>
           <BrutaCard className="absolute -bottom-8 -right-2 w-56 rotate-[3deg] bg-poporange p-3 text-black sm:right-4">
-            <p className="font-comic text-2xl leading-none">POW! Rp 1jt</p>
-            <p className="mt-1 font-body text-xs font-bold">
-              Fee platform 10% → Rp 100rb. Panitia terima Rp 900rb.
-            </p>
+            <p className="font-comic text-2xl leading-none">10% FEE</p>
           </BrutaCard>
           <Sticker className="absolute -top-4 right-6">LIVE!</Sticker>
         </div>
@@ -181,7 +172,7 @@ async function TournamentGrid() {
         <h2 className="font-display text-2xl font-black text-cream">
           TURNAMEN <span className="text-sun">AKTIF</span>
         </h2>
-        <BrutaBadge color="#F8F4E8">Turnamen</BrutaBadge>
+        <BrutaBadge color="#F6F2FB">Turnamen</BrutaBadge>
       </div>
       <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {tournaments.map((t) => (
@@ -225,10 +216,6 @@ function BracketPreview() {
         <h2 className="font-display text-2xl font-black text-cream">
           BRACKET <span className="text-popcyan">SINGLE ELIMINATION</span>
         </h2>
-        <p className="mt-2 max-w-2xl font-body text-sm text-mutedcream">
-          Contoh n=6 → size 8, 2 BYE otomatis lolos. Kartu terang di atas
-          background gelap supaya kebaca di proyektor.
-        </p>
         <div className="mt-6 flex gap-6 overflow-x-auto pb-4">
           {[
             { round: "R1", cards: ["BYE vs Tim 6", "Tim 3 vs Tim 4", "Tim 2 vs Tim 7", "BYE vs Tim 5"] },
